@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Text, DateTime, Boolean, Integer
+from sqlalchemy import Column, String, Text, DateTime, Boolean, Integer, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from datetime import datetime, timezone
@@ -27,12 +27,10 @@ class FrameworkControl(Base):
     __tablename__ = "framework_controls"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    framework_id = Column(UUID(as_uuid=True), nullable=False)
+    framework_id = Column(UUID(as_uuid=True), ForeignKey("frameworks.id", ondelete="CASCADE"), nullable=False)
     ref = Column(String(100), nullable=False)
     title = Column(String(500), nullable=False)
     description = Column(Text, nullable=True)
     status = Column(String(50), default="not_implemented")
 
-    framework = relationship("Framework", back_populates="controls",
-                             primaryjoin="FrameworkControl.framework_id == Framework.id",
-                             foreign_keys=[framework_id])
+    framework = relationship("Framework", back_populates="controls")
