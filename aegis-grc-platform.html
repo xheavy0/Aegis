@@ -1818,33 +1818,22 @@ function exportReport(){
 // ═══════════════════════════════════════════
 // SETTINGS DATA
 // ═══════════════════════════════════════════
-D.users=DB.load('users',[
-  {id:'u1',name:'Archili K.',email:'archili@company.ge',role:'GRC Officer',dept:'IT Security',status:'Active',initials:'AK',color:'#3b82f6'},
-  {id:'u2',name:'Admin',email:'admin@company.ge',role:'Admin',dept:'IT',status:'Active',initials:'AD',color:'#8b5cf6'},
-  {id:'u3',name:'Nino Kvaratskhelia',email:'n.kv@company.ge',role:'Auditor',dept:'Internal Audit',status:'Active',initials:'NK',color:'#f59e0b'},
-  {id:'u4',name:'Giorgi Beridze',email:'g.ber@company.ge',role:'Viewer',dept:'Management',status:'Active',initials:'GB',color:'#10b981'}
-]);
-D.auditLog=DB.load('auditLog',[
-  {id:'l1',ts:'2026-03-26 09:14:32',user:'Archili K.',action:'Registered risk: Unauthorized AD Access',type:'risk',icon:'⚠️'},
-  {id:'l2',ts:'2026-03-26 09:22:10',user:'Archili K.',action:'Added evidence: MFA Enrollment — Okta Q1 2026',type:'evidence',icon:'📋'},
-  {id:'l3',ts:'2026-03-26 10:05:44',user:'Admin',action:'Connected plugin: Active Directory',type:'plugin',icon:'🔌'},
-  {id:'l4',ts:'2026-03-26 10:31:20',user:'Archili K.',action:'Registered finding: FND-001 — Password Policy Gap',type:'finding',icon:'🔍'},
-  {id:'l5',ts:'2026-03-26 11:00:00',user:'Nino Kvaratskhelia',action:'Viewed evidence items (read-only, auditor)',type:'view',icon:'👁️'}
-]);
-D.auditorPerms=DB.load('auditorPerms',{
+D.users=[];  // loaded from API
+D.auditLog=[];  // loaded from API
+D.auditorPerms={
   'View Evidence':true,'Download Evidence Files':false,
   'View Risks':true,'View Risk Details':false,
   'View Findings':true,'View Remediation Notes':false,
   'View Controls':true,'View NIST Coverage':true,
   'View Vendors':false,'View Audit Reports':true,
   'View Policies':true,'Export Reports':false
-});
-D.roles=DB.load('roles',{
+};
+D.roles={
   Admin:{color:'#3b82f6',desc:'Full system access. Can manage users, configure plugins, and delete any data.',perms:{all:true}},
   'GRC Officer':{color:'#8b5cf6',desc:'Can create, edit, and delete risks, controls, evidence, and findings. Cannot manage users.',perms:{risks:true,controls:true,evidence:true,findings:true,vendors:true,audits:true,policies:true,plugins:true,reports:true,frameworks:true,settings:false}},
   Auditor:{color:'#f59e0b',desc:'Read-only access to evidence, controls, risks and reports. Cannot create or modify data.',perms:{risks:'read',controls:'read',evidence:'read',findings:'read',reports:'read',frameworks:'read',vendors:false,audits:'read',policies:'read',plugins:false,settings:false}},
   Viewer:{color:'#10b981',desc:'Can only view dashboard, reports and approved policies. No sensitive data access.',perms:{dashboard:true,reports:'read',policies:'read'}}
-});
+};
 
 // ═══════════════════════════════════════════
 // SETTINGS RENDER
