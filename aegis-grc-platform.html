@@ -1196,6 +1196,7 @@ function nav(page){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
+  window.scrollTo(0,0);
   const navEl=document.getElementById('nav-'+page);
   if(navEl)navEl.classList.add('active');
   document.getElementById('topbar-title').textContent=titles[page]||page;
