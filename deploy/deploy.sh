@@ -41,4 +41,21 @@ docker image prune -f
 echo "==> Current container status:"
 docker compose ps
 
+echo "==> Verifying deployment health..."
+MAX_RETRIES=12
+RETRY_INTERVAL=5
+for i in $(seq 1 $MAX_RETRIES); do
+  if curl -sf http://localhost/api/health >/dev/null; then
+    echo "==> Health check passed."
+    break
+  fi
+  if [ "$i" -eq "$MAX_RETRIES" ]; then
+    echo "ERROR: Health check failed after $((MAX_RETRIES * RETRY_INTERVAL))s. Check logs:"
+    docker compose logs --tail=50
+    exit 1
+  fi
+  echo "    Waiting for app to be ready... ($i/$MAX_RETRIES)"
+  sleep "$RETRY_INTERVAL"
+done
+
 echo "==> Deploy complete at $(date)"

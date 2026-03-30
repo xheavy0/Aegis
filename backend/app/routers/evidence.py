@@ -25,6 +25,8 @@ ALLOWED_MIME_TYPES = {
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 }
 
+MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10 MB
+
 
 @router.get("", response_model=List[EvidenceOut])
 def list_evidence(
@@ -65,17 +67,26 @@ async def upload_evidence(
         raise HTTPException(status_code=400, detail=f"File type not allowed: {file.content_type}")
 
     file_id = str(uuid_lib.uuid4())
-    ext = os.path.splitext(file.filename)[1]
-    file_path = os.path.join(UPLOAD_DIR, f"{file_id}{ext}")
+    ext = os.path.splitext(file.filename or "")[1].lower()
+    # Prevent path traversal: use only the generated UUID + original extension
+    safe_filename = f"{file_id}{ext}"
+    file_path = os.path.join(UPLOAD_DIR, safe_filename)
 
     async with aiofiles.open(file_path, "wb") as f:
         content = await file.read()
+        if len(content) > MAX_UPLOAD_SIZE:
+            raise HTTPException(status_code=413, detail=f"File too large. Maximum size is {MAX_UPLOAD_SIZE // (1024*1024)} MB.")
         await f.write(content)
+
+    try:
+        parsed_control_id = UUID(control_id) if control_id else None
+    except (ValueError, AttributeError):
+        raise HTTPException(status_code=400, detail="Invalid control_id format.")
 
     evidence = Evidence(
         title=title,
         description=description,
-        control_id=UUID(control_id) if control_id else None,
+        control_id=parsed_control_id,
         source="manual",
         file_path=file_path,
         file_name=file.filename,
