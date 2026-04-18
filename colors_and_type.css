@@ -1,0 +1,194 @@
+/* ═══════════════════════════════════════════════════════════════
+   AEGIS GRC — COLORS & TYPE TOKENS
+   Source: _source/aegis-grc-platform.html
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* ── SURFACE / BACKGROUND (dark — default) ── */
+  --aegis-bg:        #080c14;  /* app base — deepest */
+  --aegis-bg-2:      #0d1220;  /* panel / sidebar / card */
+  --aegis-bg-3:      #111827;  /* slightly raised surface */
+  --aegis-bg-4:      #1a2236;  /* hover / input ground */
+  --aegis-bg-5:      #1f2a40;  /* pressed / high contrast ground */
+
+  /* ── BORDERS ── */
+  --aegis-border:    #1e2d45;  /* default hairline */
+  --aegis-border-2:  #253550;  /* hover / emphasis */
+
+  /* ── TEXT ── */
+  --aegis-fg-1:      #e8edf5;  /* primary */
+  --aegis-fg-2:      #8fa3bf;  /* secondary */
+  --aegis-fg-3:      #4a6080;  /* tertiary / meta / caps labels */
+
+  /* ── BRAND / ACCENT ── */
+  --aegis-accent:       #3b82f6;  /* brand blue */
+  --aegis-accent-2:     #1d4ed8;  /* hover / pressed brand */
+  --aegis-accent-glow:  #3b82f620; /* 12% tinted surface for active nav */
+
+  /* ── SEMANTIC / STATUS ── */
+  --aegis-teal:    #06b6d4;  /* secondary brand (gradient partner) */
+  --aegis-green:   #10b981;  /* success / compliant / low */
+  --aegis-red:     #ef4444;  /* error / critical */
+  --aegis-amber:   #f59e0b;  /* warning / auditor / high */
+  --aegis-purple:  #8b5cf6;  /* framework / role-officer */
+  --aegis-pink:    #ec4899;  /* gradient partner */
+  --aegis-orange:  #f97316;  /* gradient partner */
+
+  /* ── AUDITOR MODE (ambers over black) ── */
+  --aegis-auditor-bg:     #0f0800;
+  --aegis-auditor-topbar: #1a0a00;
+  --aegis-auditor-line:   #92400e;
+  --aegis-auditor-accent: #b45309;
+  --aegis-auditor-text:   #fef3c7;
+
+  /* ── SIGNATURE GRADIENTS ── */
+  --aegis-grad-brand:  linear-gradient(135deg, #3b82f6, #06b6d4);  /* logo / hero / avatar */
+  --aegis-grad-user:   linear-gradient(135deg, #3b82f6, #8b5cf6);  /* user avatars */
+  --aegis-grad-iso:    linear-gradient(90deg,  #8b5cf6, #ec4899);  /* ISO framework */
+  --aegis-grad-red:    linear-gradient(90deg,  #ef4444, #f97316);  /* risk stat card */
+  --aegis-grad-green:  linear-gradient(90deg,  #10b981, #06b6d4);  /* green stat + SOC */
+  --aegis-grad-amber:  linear-gradient(90deg,  #f59e0b, #f97316);  /* amber stat + GDPR */
+  --aegis-grad-auditor:linear-gradient(90deg,  #92400e, #b45309);  /* auditor banner */
+
+  /* ── TYPE ── */
+  --aegis-font:  'Sora', system-ui, -apple-system, sans-serif;
+  --aegis-mono:  'JetBrains Mono', ui-monospace, monospace;
+
+  /* ── SPACING (inferred from common usage) ── */
+  --aegis-space-1:  4px;
+  --aegis-space-2:  8px;
+  --aegis-space-3:  12px;
+  --aegis-space-4:  16px;
+  --aegis-space-5:  20px;
+  --aegis-space-6:  24px;
+  --aegis-space-8:  32px;
+  --aegis-space-10: 48px;
+
+  /* ── RADIUS ── */
+  --aegis-r-sm:   5px;   /* badges */
+  --aegis-r-md:   8px;   /* buttons / inputs */
+  --aegis-r-lg:   12px;  /* cards / stat cards */
+  --aegis-r-xl:   16px;  /* login card / modal */
+  --aegis-r-pill: 999px;
+
+  /* ── LAYOUT ── */
+  --aegis-sidebar-w:          220px;
+  --aegis-sidebar-collapsed:  64px;
+  --aegis-topbar-h:           56px;
+
+  /* ── SHADOW / ELEVATION ── */
+  --aegis-shadow-modal:  0 8px 32px rgba(0,0,0,.5);
+  --aegis-backdrop:      rgba(0,0,0,.75);
+  --aegis-backdrop-blur: blur(4px);
+
+  /* ── GLOW (signature — on big numbers) ── */
+  --aegis-glow-blue:   0 0 20px #3b82f640;
+  --aegis-glow-green:  0 0 20px #10b98140;
+  --aegis-glow-red:    0 0 20px #ef444440;
+  --aegis-glow-amber:  0 0 20px #f59e0b40;
+
+  /* ── TYPE — SEMANTIC ── */
+  --aegis-h1-size:      24px;   /* page title */
+  --aegis-h1-weight:    700;
+  --aegis-h1-tracking:  -0.4px;
+
+  --aegis-h2-size:      19px;   /* modal heading */
+  --aegis-h2-weight:    700;
+  --aegis-h2-tracking:  -0.3px;
+
+  --aegis-h3-size:      17px;   /* brand name */
+  --aegis-h3-weight:    700;
+  --aegis-h3-tracking:  -0.4px;
+
+  --aegis-body-size:    13px;
+  --aegis-body-weight:  400;
+  --aegis-body-lh:      1.5;
+
+  --aegis-sub-size:     12px;   /* page sub / meta */
+  --aegis-sub-color:    var(--aegis-fg-3);
+
+  --aegis-label-size:     11px;  /* UPPERCASE labels */
+  --aegis-label-weight:   600;
+  --aegis-label-tracking: 0.1em;
+  --aegis-label-case:     uppercase;
+
+  --aegis-mono-size:    12px;
+
+  --aegis-stat-size:    36px;   /* stat num */
+  --aegis-stat-weight:  700;
+  --aegis-stat-tracking: -1px;
+
+  --aegis-hero-size:    52px;   /* report hero big score */
+  --aegis-hero-weight:  800;
+  --aegis-hero-tracking: -2px;
+}
+
+/* ── LIGHT MODE (inverts the surface/text scale) ── */
+.aegis-light {
+  --aegis-bg:        #f0f4f8;
+  --aegis-bg-2:      #ffffff;
+  --aegis-bg-3:      #f8fafc;
+  --aegis-bg-4:      #e9eef5;
+  --aegis-bg-5:      #dde4ef;
+  --aegis-border:    #cbd5e1;
+  --aegis-border-2:  #94a3b8;
+  --aegis-fg-1:      #0f172a;
+  --aegis-fg-2:      #334155;
+  --aegis-fg-3:      #64748b;
+  --aegis-accent:    #2563eb;
+  --aegis-accent-glow: #2563eb18;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SEMANTIC ELEMENT STYLES
+   ═══════════════════════════════════════════════════════════════ */
+.aegis { font-family: var(--aegis-font); color: var(--aegis-fg-1); background: var(--aegis-bg); }
+
+.aegis h1, .aegis-h1 {
+  font-size: var(--aegis-h1-size); font-weight: var(--aegis-h1-weight);
+  letter-spacing: var(--aegis-h1-tracking); color: var(--aegis-fg-1);
+  line-height: 1.15;
+}
+.aegis h2, .aegis-h2 {
+  font-size: var(--aegis-h2-size); font-weight: var(--aegis-h2-weight);
+  letter-spacing: var(--aegis-h2-tracking); color: var(--aegis-fg-1);
+}
+.aegis h3, .aegis-h3 {
+  font-size: var(--aegis-h3-size); font-weight: var(--aegis-h3-weight);
+  letter-spacing: var(--aegis-h3-tracking); color: var(--aegis-fg-1);
+}
+.aegis p, .aegis-body {
+  font-size: var(--aegis-body-size); font-weight: var(--aegis-body-weight);
+  line-height: var(--aegis-body-lh); color: var(--aegis-fg-1);
+}
+.aegis-sub {
+  font-size: var(--aegis-sub-size); color: var(--aegis-sub-color); line-height: 1.6;
+}
+.aegis-label, .aegis-card-title {
+  font-size: var(--aegis-label-size); font-weight: var(--aegis-label-weight);
+  letter-spacing: var(--aegis-label-tracking); text-transform: var(--aegis-label-case);
+  color: var(--aegis-fg-3);
+}
+.aegis-kicker {
+  font-size: var(--aegis-label-size); font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--aegis-teal);
+}
+.aegis-mono, .aegis code {
+  font-family: var(--aegis-mono); font-size: var(--aegis-mono-size);
+}
+.aegis-stat {
+  font-size: var(--aegis-stat-size); font-weight: var(--aegis-stat-weight);
+  letter-spacing: var(--aegis-stat-tracking); line-height: 1;
+}
+.aegis-hero-num {
+  font-size: var(--aegis-hero-size); font-weight: var(--aegis-hero-weight);
+  letter-spacing: var(--aegis-hero-tracking); line-height: 1;
+}
+
+/* glow utilities — signature big-number effect */
+.aegis-glow-blue  { color: var(--aegis-accent); text-shadow: var(--aegis-glow-blue); }
+.aegis-glow-green { color: var(--aegis-green);  text-shadow: var(--aegis-glow-green); }
+.aegis-glow-red   { color: var(--aegis-red);    text-shadow: var(--aegis-glow-red); }
+.aegis-glow-amber { color: var(--aegis-amber);  text-shadow: var(--aegis-glow-amber); }

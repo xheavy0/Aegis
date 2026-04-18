@@ -1,0 +1,51 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Risk Matrix</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=JetBrains+Mono:wght@600&display=swap');
+html,body{margin:0;background:#080c14;font-family:'Sora',sans-serif;color:#e8edf5;}
+.wrap{padding:18px;display:flex;gap:20px;align-items:flex-start;}
+.axis{display:flex;flex-direction:column;gap:4px;padding-top:2px;}
+.ax{font-size:10px;color:#4a6080;height:44px;display:flex;align-items:center;writing-mode:vertical-rl;transform:rotate(180deg);}
+.grid{display:grid;grid-template-columns:repeat(5,44px);grid-template-rows:repeat(5,44px);gap:4px;}
+.c{border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:rgba(255,255,255,.92);}
+.c.zero{color:rgba(255,255,255,.18);font-weight:400;}
+.low{background:#3b82f633;border:1px solid #3b82f6;}
+.med{background:#10b98144;border:1px solid #10b981;}
+.high{background:#f59e0b55;border:1px solid #f59e0b;}
+.crit{background:#ef444466;border:1px solid #ef4444;}
+.x-labels{display:grid;grid-template-columns:repeat(5,44px);gap:4px;margin-top:6px;font-size:10px;color:#4a6080;text-align:center;font-family:'JetBrains Mono',monospace;}
+.x-ttl{font-size:10px;color:#4a6080;text-align:center;margin-top:6px;letter-spacing:.08em;text-transform:uppercase;}
+.tot{display:flex;flex-direction:column;gap:10px;min-width:150px;padding-top:2px;}
+.tot .t{font-size:10px;color:#4a6080;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;}
+.tot .r{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#8fa3bf;}
+.badge{padding:2px 8px;border-radius:5px;font-size:11px;font-weight:600;}
+.b-red{background:#ef444418;color:#ef4444;border:1px solid #ef444430;}
+.b-amber{background:#f59e0b18;color:#f59e0b;border:1px solid #f59e0b30;}
+.b-green{background:#10b98118;color:#10b981;border:1px solid #10b98130;}
+.b-blue{background:#3b82f618;color:#3b82f6;border:1px solid #3b82f630;}
+</style></head>
+<body>
+<div class="wrap">
+  <div class="axis">
+    <div class="ax">V. Likely</div><div class="ax">Likely</div><div class="ax">Possible</div><div class="ax">Unlikely</div><div class="ax">Rare</div>
+  </div>
+  <div>
+    <div class="grid">
+      <div class="c med">1</div><div class="c high">2</div><div class="c high">3</div><div class="c crit">2</div><div class="c crit zero">0</div>
+      <div class="c med zero">0</div><div class="c med">2</div><div class="c high">1</div><div class="c high">4</div><div class="c crit">1</div>
+      <div class="c low">1</div><div class="c med zero">0</div><div class="c med">3</div><div class="c high">2</div><div class="c high zero">0</div>
+      <div class="c low">2</div><div class="c low zero">0</div><div class="c med">1</div><div class="c med zero">0</div><div class="c high">1</div>
+      <div class="c low zero">0</div><div class="c low">1</div><div class="c low zero">0</div><div class="c med zero">0</div><div class="c med zero">0</div>
+    </div>
+    <div class="x-labels"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div></div>
+    <div class="x-ttl">Impact →</div>
+  </div>
+  <div class="tot">
+    <div class="t">Severity Totals</div>
+    <div class="r"><span>Critical</span><span class="badge b-red">3</span></div>
+    <div class="r"><span>High</span><span class="badge b-amber">13</span></div>
+    <div class="r"><span>Medium</span><span class="badge b-green">7</span></div>
+    <div class="r"><span>Low</span><span class="badge b-blue">4</span></div>
+  </div>
+</div>
+</body></html>

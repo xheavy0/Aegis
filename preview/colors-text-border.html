@@ -1,0 +1,29 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Colors — Text & Border</title>
+<style>
+html,body{margin:0;background:#080c14;font-family:'Sora',sans-serif;color:#e8edf5;}
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap');
+.wrap{padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.col{background:#0d1220;border:1px solid #1e2d45;border-radius:12px;padding:14px;}
+.label{font-size:10px;font-weight:600;letter-spacing:.12em;color:#4a6080;text-transform:uppercase;margin-bottom:10px;}
+.row{display:flex;align-items:center;gap:10px;padding:6px 0;}
+.chip{width:18px;height:18px;border-radius:4px;border:1px solid #253550;flex-shrink:0;}
+.nm{font-size:12px;flex:1;}
+.hex{font-family:'JetBrains Mono',monospace;font-size:11px;color:#4a6080;}
+</style></head>
+<body>
+<div class="wrap">
+  <div class="col">
+    <div class="label">Text</div>
+    <div class="row"><span style="color:#e8edf5;font-weight:600;font-size:14px">Primary — Aa</span><span class="hex" style="margin-left:auto">#e8edf5</span></div>
+    <div class="row"><span style="color:#8fa3bf;font-size:13px">Secondary — Aa</span><span class="hex" style="margin-left:auto">#8fa3bf</span></div>
+    <div class="row"><span style="color:#4a6080;font-size:12px">Tertiary / Meta</span><span class="hex" style="margin-left:auto">#4a6080</span></div>
+  </div>
+  <div class="col">
+    <div class="label">Borders</div>
+    <div class="row"><span class="chip" style="background:#1e2d45"></span><span class="nm">Default hairline</span><span class="hex">#1e2d45</span></div>
+    <div class="row"><span class="chip" style="background:#253550"></span><span class="nm">Hover / emphasis</span><span class="hex">#253550</span></div>
+    <div class="row" style="border-top:1px solid #1e2d45;margin-top:6px;padding-top:10px"><span class="nm" style="font-size:11px;color:#4a6080">1px hairlines everywhere — no drop shadows.</span></div>
+  </div>
+</div>
+</body></html>

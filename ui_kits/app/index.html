@@ -1,0 +1,66 @@
+<!doctype html>
+<html><head>
+<meta charset="utf-8">
+<title>Aegis GRC — UI Kit</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body,#root{height:100%;}
+html{overflow:hidden;}
+body{background:#080c14;color:#e8edf5;font-family:'Sora',sans-serif;overflow:hidden;}
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="Primitives.jsx"></script>
+<script type="text/babel" src="Sidebar.jsx"></script>
+<script type="text/babel" src="Topbar.jsx"></script>
+<script type="text/babel" src="Home.jsx"></script>
+<script type="text/babel" src="RiskMatrix.jsx"></script>
+<script type="text/babel" src="RiskRegister.jsx"></script>
+<script type="text/babel" src="Login.jsx"></script>
+
+<script type="text/babel">
+const App = () => {
+  const [signedIn, setSignedIn] = React.useState(true);
+  const [page, setPage] = React.useState('home');
+  const [collapsed, setCollapsed] = React.useState(false);
+  const [auditor, setAuditor] = React.useState(false);
+
+  if (!signedIn) return <Login onSubmit={() => setSignedIn(true)}/>;
+
+  return (
+    <div data-screen-label={`01 ${page}`} style={{position:'fixed', inset:0, background: auditor ? '#0f0800' : '#080c14'}}>
+      <Sidebar active={page} onNav={setPage} collapsed={collapsed} onToggle={() => setCollapsed(!collapsed)}/>
+      <div style={{
+        position:'fixed', top:0, left: collapsed ? 64 : 220, right:0, bottom:0,
+        display:'flex', flexDirection:'column', overflow:'hidden',
+        transition:'left .25s cubic-bezier(.4,0,.2,1)',
+      }}>
+        {auditor && <AuditorBanner onExit={() => setAuditor(false)}/>}
+        <Topbar page={page} auditor={auditor} onToggleAuditor={() => setAuditor(!auditor)}/>
+        <div style={{padding:24, flex:1, overflowY:'auto'}}>
+          {page === 'home' && <Home onNav={setPage}/>}
+          {page === 'risks' && <RiskRegister onNav={setPage} onOpenMatrix={() => {}}/>}
+          {!['home','risks'].includes(page) && (
+            <div style={{padding:48, textAlign:'center', color:'#4a6080', fontSize:13}}>
+              <div style={{fontSize:24, marginBottom:12, color:'#e8edf5', fontWeight:700, letterSpacing:'-.4px'}}>
+                {page.charAt(0).toUpperCase()+page.slice(1)}
+              </div>
+              This surface is not reconstructed in the UI kit.<br/>
+              See <code style={{fontFamily:"'JetBrains Mono',monospace", color:'#3b82f6'}}>_source/aegis-grc-platform.html</code> for the full implementation.
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body></html>

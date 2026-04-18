@@ -1,0 +1,31 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Buttons</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&display=swap');
+html,body{margin:0;background:#080c14;font-family:'Sora',sans-serif;color:#e8edf5;}
+.wrap{padding:18px;display:flex;flex-direction:column;gap:10px;}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.btn{padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:7px;font-family:'Sora',sans-serif;}
+.btn-primary{background:#3b82f6;color:#fff;}
+.btn-ghost{background:transparent;color:#8fa3bf;border:1px solid #1e2d45;}
+.btn-danger{background:#ef444415;color:#ef4444;border:1px solid #ef444425;}
+.btn-sm{padding:5px 11px;font-size:12px;}
+.lbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#4a6080;font-weight:600;}
+</style></head>
+<body>
+<div class="wrap">
+  <div class="lbl">Primary / Ghost / Danger</div>
+  <div class="row">
+    <button class="btn btn-primary">+ Create Risk</button>
+    <button class="btn btn-ghost">⬆ Import CSV</button>
+    <button class="btn btn-ghost">📄 Export PDF</button>
+    <button class="btn btn-danger">Delete</button>
+  </div>
+  <div class="lbl">Small</div>
+  <div class="row">
+    <button class="btn btn-primary btn-sm">💾 Save</button>
+    <button class="btn btn-ghost btn-sm">← Back</button>
+    <button class="btn btn-ghost btn-sm">⚙ Configure</button>
+  </div>
+</div>
+</body></html>

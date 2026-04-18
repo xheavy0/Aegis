@@ -1,0 +1,45 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Badges</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap');
+html,body{margin:0;background:#080c14;font-family:'Sora',sans-serif;color:#e8edf5;}
+.wrap{padding:18px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:5px;font-size:11px;font-weight:600;letter-spacing:.02em;}
+.b-red{background:#ef444418;color:#ef4444;border:1px solid #ef444430;}
+.b-amber{background:#f59e0b18;color:#f59e0b;border:1px solid #f59e0b30;}
+.b-green{background:#10b98118;color:#10b981;border:1px solid #10b98130;}
+.b-blue{background:#3b82f618;color:#3b82f6;border:1px solid #3b82f630;}
+.b-purple{background:#8b5cf618;color:#8b5cf6;border:1px solid #8b5cf630;}
+.b-teal{background:#06b6d418;color:#06b6d4;border:1px solid #06b6d430;}
+.b-gray{background:#ffffff0a;color:#8fa3bf;border:1px solid #1e2d45;}
+.b-dot::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block;margin-right:2px;}
+.row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;width:100%;}
+.lbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#4a6080;font-weight:600;width:100%;margin:4px 0 0;}
+</style></head>
+<body>
+<div class="wrap">
+<div class="lbl">Severity</div>
+<div class="row">
+  <span class="badge b-red">Critical</span>
+  <span class="badge b-amber">High</span>
+  <span class="badge b-green">Medium</span>
+  <span class="badge b-blue">Low</span>
+</div>
+<div class="lbl">Status</div>
+<div class="row">
+  <span class="badge b-red b-dot">Open</span>
+  <span class="badge b-amber b-dot">In Progress</span>
+  <span class="badge b-green b-dot">Resolved</span>
+  <span class="badge b-teal">Accepted</span>
+  <span class="badge b-gray">Closed</span>
+  <span class="badge b-blue">Pending</span>
+</div>
+<div class="lbl">Roles</div>
+<div class="row">
+  <span class="badge b-blue">ADMIN</span>
+  <span class="badge b-purple">OFFICER</span>
+  <span class="badge b-amber">AUDITOR</span>
+  <span class="badge b-green">VIEWER</span>
+</div>
+</div>
+</body></html>

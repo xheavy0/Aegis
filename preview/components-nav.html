@@ -1,0 +1,47 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Nav Items</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&display=swap');
+html,body{margin:0;background:#0d1220;font-family:'Sora',sans-serif;color:#e8edf5;}
+.wrap{padding:14px 0;width:260px;border-right:1px solid #1e2d45;min-height:100vh;}
+.sec{font-size:10px;font-weight:600;color:#4a6080;letter-spacing:.1em;text-transform:uppercase;padding:14px 16px 6px;}
+.nav{display:flex;align-items:center;gap:12px;padding:9px 16px;margin:1px 8px;border-radius:8px;cursor:pointer;color:#8fa3bf;font-size:13.5px;position:relative;}
+.nav:hover{background:#1a2236;color:#e8edf5;}
+.nav.active{background:#3b82f620;color:#3b82f6;font-weight:500;}
+.nav.active::before{content:'';position:absolute;left:0;top:4px;bottom:4px;width:3px;background:#3b82f6;border-radius:0 2px 2px 0;}
+.nav svg{width:18px;height:18px;flex-shrink:0;}
+.b{margin-left:auto;font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;}
+.b-amber{background:#f59e0b18;color:#f59e0b;border:1px solid #f59e0b30;}
+.b-red{background:#ef444418;color:#ef4444;border:1px solid #ef444430;}
+</style></head>
+<body>
+<div class="wrap">
+  <div class="sec">Overview</div>
+  <div class="nav active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1V10.5z"/></svg>
+    Home
+  </div>
+  <div class="nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg>
+    Reports
+  </div>
+  <div class="sec">Continuous Monitoring</div>
+  <div class="nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+    Frameworks
+  </div>
+  <div class="nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    Findings<span class="b b-amber">7</span>
+  </div>
+  <div class="nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v5c0 5-3.5 9.2-8 10-4.5-.8-8-5-8-10V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+    Controls
+  </div>
+  <div class="sec">Risk Management</div>
+  <div class="nav">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9L2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+    Risks<span class="b b-red">23</span>
+  </div>
+</div>
+</body></html>
