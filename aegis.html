@@ -3197,10 +3197,18 @@
 
 
         <script>
+            // ══════════════════════════════════════════════════════════
+            //  AEGIS GRC — Frontend  ↔  Backend wiring
+            //  API base: /api  (proxied by nginx to FastAPI on :8000)
+            // ══════════════════════════════════════════════════════════
+
+            // ── Layout helpers ────────────────────────────────────────
             function showLogin() {
                 document.getElementById('login-overlay').style.display = 'flex';
-                document.getElementById('app-wrapper').style.display = 'none';
-                document.getElementById('app-wrapper').style.position = '';
+                const aw = document.getElementById('app-wrapper');
+                aw.style.display = 'none';
+                aw.style.position = '';
+                aw.style.inset = '';
             }
             function hideLogin() {
                 document.getElementById('login-overlay').style.display = 'none';
@@ -3209,175 +3217,318 @@
                 aw.style.position = 'fixed';
                 aw.style.inset = '0';
             }
-            function doLogin() {
-                const btn = document.getElementById('login-btn');
-                btn.style.background = 'rgba(255,255,255,0.2)';
-                btn.textContent = 'AUTHENTICATING...';
-                btn.disabled = true;
-                setTimeout(() => {
-                    hideLogin();
-                    nav('home');
-                    // restore saved dark mode
-                    if (localStorage.getItem('aegis-dark') === '1') toggleDark();
-                    const wd = document.getElementById('welcome-date');
-                    if (wd) { const d = new Date(); wd.textContent = d.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' }); }
-                    // reset button for next time
-                    btn.style.background = '#00e599';
-                    btn.textContent = 'LOGIN';
-                    btn.disabled = false;
-                }, 1200);
+
+            // ── API helper ────────────────────────────────────────────
+            const API = {
+                async request(path, opts = {}) {
+                    const token = localStorage.getItem('aegis-token');
+                    const headers = { 'Content-Type': 'application/json', ...(opts.headers || {}) };
+                    if (token) headers['Authorization'] = 'Bearer ' + token;
+                    const res = await fetch('/api' + path, { ...opts, headers });
+                    if (res.status === 401) { doLogout(); throw new Error('Unauthorized'); }
+                    return res;
+                },
+                async get(path) { return (await this.request(path)).json(); },
+                async post(path, body) {
+                    return (await this.request(path, { method: 'POST', body: JSON.stringify(body) })).json();
+                }
+            };
+
+            // ── Login error display ───────────────────────────────────
+            function showLoginError(msg) {
+                let err = document.getElementById('login-error');
+                if (!err) {
+                    err = document.createElement('div');
+                    err.id = 'login-error';
+                    err.style.cssText = 'color:#f87171;font-size:13px;margin-top:12px;text-align:center;font-family:var(--font);transition:opacity .3s';
+                    document.getElementById('login-btn').insertAdjacentElement('afterend', err);
+                }
+                err.textContent = msg;
+                clearTimeout(err._t);
+                err._t = setTimeout(() => { err.textContent = ''; }, 5000);
             }
-            function doLogout() {
-                showLogin();
+
+            function resetLoginBtn() {
                 const btn = document.getElementById('login-btn');
                 btn.style.background = '#00e599';
                 btn.textContent = 'LOGIN';
                 btn.disabled = false;
-                document.getElementById('login-email').value = '';
-                document.getElementById('login-password').value = '';
             }
-            // Enter key support on login form
-            document.addEventListener('DOMContentLoaded', function() {
-                ['login-email','login-password'].forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
-                });
-            });
-            function toggleSidebar() {
-                const sb = document.getElementById('sidebar');
-                const mn = document.getElementById('main');
-                const tb = document.getElementById('toggle-btn');
-                const isCollapsed = sb.classList.contains('collapsed');
 
-                if (isCollapsed) {
-                    sb.classList.remove('collapsed');
-                    mn.classList.remove('collapsed');
-                    if (tb) tb.textContent = '◀';
-                } else {
-                    sb.classList.add('collapsed');
-                    mn.classList.add('collapsed');
-                    if (tb) tb.textContent = '▶';
+            // ── Authentication ────────────────────────────────────────
+            async function doLogin() {
+                const email    = (document.getElementById('login-email').value || '').trim();
+                const password = document.getElementById('login-password').value || '';
+                if (!email || !password) { showLoginError('Please enter your email and password.'); return; }
+
+                const btn = document.getElementById('login-btn');
+                btn.style.background = 'rgba(255,255,255,0.15)';
+                btn.textContent = 'AUTHENTICATING…';
+                btn.disabled = true;
+
+                try {
+                    const res = await fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    if (!res.ok) {
+                        const err = await res.json().catch(() => ({}));
+                        showLoginError(err.detail || 'Invalid credentials.');
+                        resetLoginBtn();
+                        return;
+                    }
+
+                    const data = await res.json();
+                    localStorage.setItem('aegis-token', data.access_token);
+                    localStorage.setItem('aegis-user', JSON.stringify(data.user));
+                    resetLoginBtn();
+                    enterApp(data.user);
+
+                } catch (e) {
+                    // Backend unreachable — enter demo mode
+                    console.warn('[Aegis] Backend unavailable, running in demo mode:', e.message);
+                    showLoginError('⚠ Backend unavailable — running in demo mode');
+                    resetLoginBtn();
+                    setTimeout(() => enterApp(null), 800);
                 }
             }
 
-            const RISKS = [
-                { id: 'R-014', name: 'Unpatched external asset', cat: 'Infrastructure', sev: 'Critical', l: 4, i: 5, owner: { n: 'Lev V.', c: '#dc2626' }, status: 'Open', upd: '12 min ago' },
-                { id: 'R-008', name: 'Stale SSO tokens', cat: 'Access', sev: 'Critical', l: 5, i: 3, owner: { n: 'Archili K.', c: '#4f46e5' }, status: 'In progress', upd: '1 hr ago' },
-                { id: 'R-021', name: 'Snowflake vendor review', cat: 'Vendor', sev: 'Critical', l: 3, i: 5, owner: { n: 'Dana K.', c: '#d97706' }, status: 'Overdue', upd: 'Yesterday' },
-                { id: 'R-005', name: 'Untested BCP runbook', cat: 'Compliance', sev: 'High', l: 4, i: 4, owner: { n: 'Lev V.', c: '#dc2626' }, status: 'Open', upd: '2 days ago' },
-                { id: 'R-012', name: 'Privileged accounts — MFA', cat: 'Access', sev: 'High', l: 4, i: 3, owner: { n: 'Dana K.', c: '#d97706' }, status: 'In progress', upd: '3 days ago' },
-                { id: 'R-003', name: 'Missing DLP policy', cat: 'Data', sev: 'Medium', l: 3, i: 3, owner: { n: 'Archili K.', c: '#4f46e5' }, status: 'In progress', upd: '5 days ago' },
-                { id: 'R-017', name: 'Server room physical access', cat: 'Physical', sev: 'Low', l: 2, i: 2, owner: { n: 'Admin', c: '#0d9488' }, status: 'Accepted', upd: '1 week ago' },
-            ];
-            const SEV_CLASS = { Critical: 'red', High: 'amber', Medium: 'green', Low: 'blue' };
-            const STATUS_CLASS = { Open: 'red', Overdue: 'red', 'In progress': 'amber', Accepted: 'teal', Closed: 'gray' };
+            async function doLogout() {
+                localStorage.removeItem('aegis-token');
+                localStorage.removeItem('aegis-user');
+                RISKS = [...DEMO_RISKS];
+                showLogin();
+                resetLoginBtn();
+                document.getElementById('login-email').value = '';
+                document.getElementById('login-password').value = '';
+            }
 
-            function initials(n) { return n.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() }
+            // Auto-login: if valid token already in localStorage, skip login screen
+            async function tryAutoLogin() {
+                const token = localStorage.getItem('aegis-token');
+                if (!token) return false;
+                try {
+                    const res = await fetch('/api/auth/me', {
+                        headers: { 'Authorization': 'Bearer ' + token }
+                    });
+                    if (res.ok) {
+                        const user = await res.json();
+                        localStorage.setItem('aegis-user', JSON.stringify(user));
+                        enterApp(user);
+                        return true;
+                    }
+                    localStorage.removeItem('aegis-token');
+                    localStorage.removeItem('aegis-user');
+                } catch (e) { /* backend unavailable */ }
+                return false;
+            }
+
+            // Enter the app: update UI with real user, nav to home, load data
+            function enterApp(user) {
+                hideLogin();
+                nav('home');
+                if (localStorage.getItem('aegis-dark') === '1') toggleDark();
+
+                // Update user card with real name/role
+                if (user) {
+                    const inits = (user.full_name || 'U')
+                        .split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+                    const avatar = document.querySelector('.avatar');
+                    if (avatar) avatar.textContent = inits;
+                    const uName = document.querySelector('.user-name');
+                    if (uName) uName.textContent = user.full_name || 'User';
+                    const uRole = document.querySelector('.user-role');
+                    if (uRole) uRole.textContent =
+                        (user.role || 'viewer').replace(/_/g, ' ')
+                        .replace(/\b\w/g, c => c.toUpperCase());
+                }
+
+                // Load real data (falls back to demo data if backend unavailable)
+                loadRisks();
+            }
+
+            // Enter key support
+            ['login-email', 'login-password'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+            });
+
+            // ── Risk data ─────────────────────────────────────────────
+            const SEV_CLASS    = { Critical: 'red', High: 'amber', Medium: 'green', Low: 'blue' };
+            const STATUS_CLASS = { Open: 'red', Overdue: 'red', 'In progress': 'amber', Accepted: 'teal', Closed: 'gray' };
+            const OWNER_COLORS = ['#4f46e5','#dc2626','#d97706','#16a34a','#0d9488','#7c3aed','#2563eb'];
+            const _ownerColorMap = {};
+            function ownerColor(name) {
+                if (!_ownerColorMap[name])
+                    _ownerColorMap[name] = OWNER_COLORS[Object.keys(_ownerColorMap).length % OWNER_COLORS.length];
+                return _ownerColorMap[name];
+            }
+            function relTime(iso) {
+                const m = Math.floor((Date.now() - new Date(iso)) / 60000);
+                if (m < 2)  return 'just now';
+                if (m < 60) return m + ' min ago';
+                const h = Math.floor(m / 60);
+                if (h < 24) return h + ' hr' + (h > 1 ? 's' : '') + ' ago';
+                const d = Math.floor(h / 24);
+                if (d === 1) return 'Yesterday';
+                if (d < 7)  return d + ' days ago';
+                return Math.floor(d / 7) + ' week' + (Math.floor(d/7) > 1 ? 's' : '') + ' ago';
+            }
+
+            // Maps API RiskOut → UI risk object
+            function apiToUI(r) {
+                const sevMap = { critical: 'Critical', high: 'High', medium: 'Medium', low: 'Low' };
+                const stMap  = { open: 'Open', in_progress: 'In progress', accepted: 'Accepted', closed: 'Closed' };
+                // Generate short display ID from UUID prefix
+                const short = 'R-' + String(r.id).replace(/-/g,'').slice(-3).toUpperCase();
+                return {
+                    id:     short,
+                    name:   r.title,
+                    cat:    r.category  || 'General',
+                    sev:    sevMap[r.level]  || 'Medium',
+                    l:      r.likelihood,
+                    i:      r.impact,
+                    owner:  { n: r.owner || 'Unassigned', c: ownerColor(r.owner || 'Unassigned') },
+                    status: stMap[r.status] || 'Open',
+                    upd:    relTime(r.updated_at)
+                };
+            }
+
+            // Demo data (shown when backend is unavailable or has no risks yet)
+            const DEMO_RISKS = [
+                { id: 'R-014', name: 'Unpatched external asset',     cat: 'Infrastructure', sev: 'Critical', l: 4, i: 5, owner: { n: 'Lev V.',      c: '#dc2626' }, status: 'Open',        upd: '12 min ago' },
+                { id: 'R-008', name: 'Stale SSO tokens',             cat: 'Access',         sev: 'Critical', l: 5, i: 3, owner: { n: 'Archili K.',   c: '#4f46e5' }, status: 'In progress', upd: '1 hr ago'   },
+                { id: 'R-021', name: 'Snowflake vendor review',       cat: 'Vendor',         sev: 'Critical', l: 3, i: 5, owner: { n: 'Dana K.',      c: '#d97706' }, status: 'Overdue',     upd: 'Yesterday'  },
+                { id: 'R-005', name: 'Untested BCP runbook',          cat: 'Compliance',     sev: 'High',     l: 4, i: 4, owner: { n: 'Lev V.',      c: '#dc2626' }, status: 'Open',        upd: '2 days ago' },
+                { id: 'R-012', name: 'Privileged accounts — MFA',    cat: 'Access',         sev: 'High',     l: 4, i: 3, owner: { n: 'Dana K.',      c: '#d97706' }, status: 'In progress', upd: '3 days ago' },
+                { id: 'R-003', name: 'Missing DLP policy',            cat: 'Data',           sev: 'Medium',   l: 3, i: 3, owner: { n: 'Archili K.',   c: '#4f46e5' }, status: 'In progress', upd: '5 days ago' },
+                { id: 'R-017', name: 'Server room physical access',   cat: 'Physical',       sev: 'Low',      l: 2, i: 2, owner: { n: 'Admin',       c: '#0d9488' }, status: 'Accepted',    upd: '1 week ago' },
+            ];
+            let RISKS = [...DEMO_RISKS];
+
+            async function loadRisks() {
+                const token = localStorage.getItem('aegis-token');
+                if (!token) { renderRisks(); renderMatrix(); return; }
+                try {
+                    const res = await fetch('/api/risks?limit=200', {
+                        headers: { 'Authorization': 'Bearer ' + token }
+                    });
+                    if (res.status === 401) { doLogout(); return; }
+                    if (res.ok) {
+                        const apiRisks = await res.json();
+                        if (Array.isArray(apiRisks) && apiRisks.length > 0)
+                            RISKS = apiRisks.map(apiToUI);
+                    }
+                } catch (e) {
+                    console.warn('[Aegis] Could not load risks from API, using demo data.');
+                } finally {
+                    renderRisks();
+                    renderMatrix();
+                }
+            }
+
+            function initials(n) { return n.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase(); }
 
             function renderRisks() {
                 const tb = document.getElementById('risk-tbody');
                 if (!tb) return;
                 tb.innerHTML = RISKS.map(r => `
-    <tr onclick="openDrawer('${r.id}','${r.name}')">
-      <td><span class="pill">${r.id}</span></td>
-      <td><div class="risk-title">${r.name}</div><div class="risk-meta">${r.cat}</div></td>
-      <td><span class="chip ${SEV_CLASS[r.sev]}">${r.sev}</span></td>
-      <td><div class="risk-owner"><div class="owner-avatar" style="background:${r.owner.c};">${initials(r.owner.n)}</div>${r.owner.n}</div></td>
-      <td><span class="chip ${STATUS_CLASS[r.status]} no-dot">${r.status}</span></td>
-      <td style="color:var(--fg-3);font-size:12px;">${r.upd}</td>
-      <td><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--fg-3)"><path d="M9 18l6-6-6-6"/></svg></td>
-    </tr>
-  `).join('');
+  <tr onclick="openDrawer('${r.id}','${r.name.replace(/'/g,"\\'")}')">
+    <td><span class="pill">${r.id}</span></td>
+    <td><div class="risk-title">${r.name}</div><div class="risk-meta">${r.cat}</div></td>
+    <td><span class="chip ${SEV_CLASS[r.sev]}">${r.sev}</span></td>
+    <td><div class="risk-owner"><div class="owner-avatar" style="background:${r.owner.c};">${initials(r.owner.n)}</div>${r.owner.n}</div></td>
+    <td><span class="chip ${STATUS_CLASS[r.status]} no-dot">${r.status}</span></td>
+    <td style="color:var(--fg-3);font-size:12px;">${r.upd}</td>
+    <td><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--fg-3)"><path d="M9 18l6-6-6-6"/></svg></td>
+  </tr>`).join('');
             }
 
             function renderMatrix() {
                 const counts = Array.from({ length: 5 }, () => Array(5).fill(0));
-                RISKS.forEach(r => { counts[r.l - 1][r.i - 1]++; });
+                RISKS.forEach(r => { if (r.l >= 1 && r.l <= 5 && r.i >= 1 && r.i <= 5) counts[r.l - 1][r.i - 1]++; });
                 const BANDS = [
-                    ['low', 'low', 'med', 'med', 'high'],
-                    ['low', 'med', 'med', 'high', 'high'],
-                    ['low', 'med', 'med', 'high', 'crit'],
-                    ['med', 'med', 'high', 'high', 'crit'],
-                    ['med', 'high', 'high', 'crit', 'crit'],
+                    ['low','low','med','med','high'],
+                    ['low','med','med','high','high'],
+                    ['low','med','med','high','crit'],
+                    ['med','med','high','high','crit'],
+                    ['med','high','high','crit','crit'],
                 ];
                 const g = document.getElementById('m-grid');
                 if (!g) return;
                 let html = '';
-                for (let li = 4; li >= 0; li--) {
+                for (let li = 4; li >= 0; li--)
                     for (let ii = 0; ii < 5; ii++) {
                         const n = counts[li][ii];
-                        const band = BANDS[li][ii];
-                        html += `<div class="m-cell ${band} ${n === 0 ? 'empty' : ''}">${n}</div>`;
+                        html += `<div class="m-cell ${BANDS[li][ii]} ${n === 0 ? 'empty' : ''}">${n}</div>`;
                     }
-                }
                 g.innerHTML = html;
             }
 
+            // ── Drawer ────────────────────────────────────────────────
             function openDrawer(id, title) {
                 const t = document.getElementById('dw-title');
                 if (t) t.textContent = title || 'Risk details';
                 const p = document.querySelector('.drawer-head .pill');
                 if (p) p.textContent = id;
-                const d = document.getElementById('drawer');
-                if (d) d.classList.add('open');
-                const o = document.getElementById('drawer-overlay');
-                if (o) o.classList.add('open');
+                document.getElementById('drawer')?.classList.add('open');
+                document.getElementById('drawer-overlay')?.classList.add('open');
             }
             function closeDrawer() {
-                const d = document.getElementById('drawer');
-                if (d) d.classList.remove('open');
-                const o = document.getElementById('drawer-overlay');
-                if (o) o.classList.remove('open');
+                document.getElementById('drawer')?.classList.remove('open');
+                document.getElementById('drawer-overlay')?.classList.remove('open');
             }
 
-            // ── Dark mode ──
+            // ── Dark mode ─────────────────────────────────────────────
             function toggleDark() {
                 const app = document.getElementById('app-wrapper');
                 const isDark = app.classList.toggle('dark');
-                const sun  = document.getElementById('icon-sun');
-                const moon = document.getElementById('icon-moon');
-                if (isDark) {
-                    sun.style.display  = 'none';
-                    moon.style.display = '';
-                } else {
-                    sun.style.display  = '';
-                    moon.style.display = 'none';
-                }
-                // sync tweaks panel switch
+                document.getElementById('icon-sun').style.display  = isDark ? 'none' : '';
+                document.getElementById('icon-moon').style.display = isDark ? '' : 'none';
                 const sw = document.getElementById('sw-dark');
                 if (sw) sw.classList.toggle('on', isDark);
                 localStorage.setItem('aegis-dark', isDark ? '1' : '');
             }
-            // Restore dark mode preference (runs immediately on page load)
-            (function() {
-                // Dark mode is restored after login via doLogin(); nothing to do here
-            })();
 
-            // Modify the old nav() or replace it
+            // ── Navigation ────────────────────────────────────────────
             function nav(p) {
                 document.querySelectorAll('.nav-item').forEach(n => {
                     n.classList.remove('active');
                     if (n.id === 'nav-' + p) n.classList.add('active');
                 });
-                document.querySelectorAll('.page').forEach(pg => {
-                    pg.classList.remove('active');
-                    pg.classList.remove('show');
-                });
+                document.querySelectorAll('.page').forEach(pg => pg.classList.remove('show'));
                 const target = document.getElementById('page-' + p);
-                if (target) {
-                    target.classList.add('active');
-                    target.classList.add('show');
-                }
-                const breadcrumb = document.getElementById('crumb-page');
-                const map = { home: 'Overview', reports: 'Analytics', frameworks: 'Frameworks', findings: 'Findings', controls: 'Controls', policies: 'Policies', risks: 'Risk Register', plugins: 'Integrations', evidence: 'Evidence', settings: 'Settings' }
-                if (breadcrumb) breadcrumb.textContent = map[p] || 'Overview';
+                if (target) target.classList.add('show');
+                const crumb = document.getElementById('crumb-page');
+                const MAP = { home:'Overview', reports:'Analytics', frameworks:'Frameworks',
+                    findings:'Findings', controls:'Controls', policies:'Policies',
+                    risks:'Risk Register', plugins:'Integrations', evidence:'Evidence', settings:'Settings' };
+                if (crumb) crumb.textContent = MAP[p] || 'Overview';
+                // Reload risks when navigating to risks page
+                if (p === 'risks') { renderRisks(); renderMatrix(); }
             }
 
-            setTimeout(() => {
+            // ── Sidebar toggle (unused in current layout but kept) ────
+            function toggleSidebar() {
+                const sb = document.getElementById('sidebar');
+                const mn = document.getElementById('main');
+                sb?.classList.toggle('collapsed');
+                mn?.classList.toggle('collapsed');
+            }
+
+            // ── Boot sequence ─────────────────────────────────────────
+            (async function boot() {
+                // 1. Render demo data immediately (visible after login)
                 renderRisks();
                 renderMatrix();
-            }, 100);
+                // 2. Try to skip login if token already valid
+                const skipped = await tryAutoLogin();
+                // If not skipped, user sees login page (already visible by default)
+            })();
         </script>
+
 </body>
 
 </html>
