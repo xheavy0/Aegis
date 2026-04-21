@@ -8,7 +8,7 @@ set -e
 
 APP_USER="${APP_USER:-$(whoami)}"
 APP_DIR="${APP_DIR:-/home/${APP_USER}/aegis}"
-REPO_URL="${REPO_URL:-https://github.com/xheavy0/Aegis_GRC_PLATFORM.git}"
+REPO_URL="${REPO_URL:-https://github.com/xheavy0/Aegis.git}"
 
 echo "▶ Updating system..."
 apt-get update -y && apt-get upgrade -y
