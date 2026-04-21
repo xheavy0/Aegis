@@ -46,6 +46,7 @@ services:
     volumes:
       - ./aegis.html:/usr/share/nginx/html/index.html:ro
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./assets:/usr/share/nginx/html/assets:ro
     depends_on:
       api:
         condition: service_healthy
