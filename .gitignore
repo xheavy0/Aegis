@@ -1,0 +1,27 @@
+# Environment files — never commit secrets
+backend/.env
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+
+# Docker volumes / data
+postgres_data/
+uploads_data/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
