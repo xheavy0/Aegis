@@ -43,9 +43,8 @@ DB_PASS=$(openssl rand -hex 24)
 sed -i "s/REPLACE_WITH_RANDOM_64_CHAR_STRING/$SECRET/" backend/.env
 sed -i "s/CHANGE_ME_STRONG_PASSWORD/${DB_PASS}/g" backend/.env
 
-# Set POSTGRES_PASSWORD for docker-compose
-echo "" >> backend/.env
-echo "POSTGRES_PASSWORD=${DB_PASS}" >> backend/.env
+# Set POSTGRES_PASSWORD for docker-compose (root .env for docker-compose.yml)
+echo "POSTGRES_PASSWORD=${DB_PASS}" > .env
 
 echo "▶ Starting application..."
 docker compose up -d --build
