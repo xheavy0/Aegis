@@ -1,4 +1,4 @@
-name: Deploy to AWS EC2
+name: Deploy to VM
 
 on:
   push:
@@ -10,14 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy to EC2
+      - name: Deploy to VM
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
-          key: ${{ secrets.EC2_SSH_KEY }}
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.VM_SSH_KEY }}
           script: |
-            cd /home/ubuntu/aegis
+            cd ${{ secrets.VM_APP_PATH }}
             git pull origin main
             docker compose up -d --build --remove-orphans
             docker image prune -f

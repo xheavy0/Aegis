@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Aegis GRC deploy/update script for EC2.
+# Aegis GRC deploy/update script for VM.
 set -Eeuo pipefail
 
 APP_DIR="${APP_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
