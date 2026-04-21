@@ -6,8 +6,9 @@
 # ═══════════════════════════════════════════════════════
 set -e
 
-APP_USER="${APP_USER:-$(whoami)}"
-APP_DIR="${APP_DIR:-/home/${APP_USER}/aegis}"
+APP_USER="${APP_USER:-$(logname 2>/dev/null || echo root)}"
+APP_HOME=$(eval echo ~"$APP_USER")
+APP_DIR="${APP_DIR:-${APP_HOME}/aegis}"
 REPO_URL="${REPO_URL:-https://github.com/xheavy0/Aegis.git}"
 
 echo "▶ Updating system..."
