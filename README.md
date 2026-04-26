@@ -7,7 +7,7 @@ Single-server deployment for a local VM or an on-prem web server.
 - Main UI entry point: `aegis.html`
 - Login is connected to the backend API in `aegis.html` with `AUTH_BYPASS=false`
 - VM deployment scripts live in `deploy/`
-- AWS/EC2-specific deployment files have been removed
+
 
 ## VM Deployment
 
