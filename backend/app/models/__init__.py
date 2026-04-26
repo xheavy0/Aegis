@@ -9,3 +9,5 @@ from app.models.policy import Policy
 from app.models.evidence import Evidence
 from app.models.framework import Framework, FrameworkControl
 from app.models.risk_matrix import RiskMatrixConfig
+from app.models.task import Task
+from app.models.calendar_event import CalendarEvent

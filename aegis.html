@@ -13,6 +13,7 @@
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"></noscript>
 
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.7/build/spline-viewer.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
         :root {
@@ -2037,7 +2038,7 @@ body.light-mode .role-viewer{background:#dcfce7;color:#16a34a;border:1px solid #
 .topbar-title{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.2px;}
 .topbar-sep{width:1px;height:18px;background:var(--border);}
 .topbar-breadcrumb{font-size:13px;color:var(--text3);}
-.topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:12px;}
 .topbar-btn{
   padding:6px 14px;border-radius:9px;border:1px solid var(--border);
   background:var(--bg3);color:var(--text2);font-size:12px;font-weight:500;
@@ -2045,6 +2046,30 @@ body.light-mode .role-viewer{background:#dcfce7;color:#16a34a;border:1px solid #
 }
 .topbar-btn:hover{background:var(--bg4);color:var(--text);border-color:var(--border2);}
 .topbar-indicator{width:7px;height:7px;border-radius:50%;background:var(--green);}
+.topbar-search{height:38px;min-width:220px;border:1px solid transparent;background:var(--bg3);border-radius:19px;color:var(--text2);display:flex;align-items:center;gap:10px;padding:0 14px;font-size:13px;}
+.topbar-search input{border:0;background:transparent;color:var(--text);outline:0;width:100%;font-family:var(--font);}
+.topbar-search input::placeholder{color:var(--text3);}
+.topbar-icon-btn{width:34px;height:34px;border:0;background:transparent;color:var(--text3);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:all .15s;}
+.topbar-icon-btn:hover{background:var(--bg3);color:var(--text);}
+.topbar-dot{position:absolute;top:3px;right:4px;min-width:17px;height:17px;border-radius:999px;background:var(--red);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg2);}
+.topbar-flag{font-size:18px;line-height:1;}
+.language-menu{position:relative;}
+.language-menu:hover .language-dropdown,.language-menu:focus-within .language-dropdown{display:block;}
+.language-dropdown{display:none;position:absolute;right:0;top:calc(100% + 8px);width:156px;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;box-shadow:var(--shadow-lg);padding:6px;z-index:120;}
+.language-option{width:100%;display:flex;align-items:center;gap:9px;padding:8px 9px;border:0;background:transparent;border-radius:7px;color:var(--text2);font-family:var(--font);font-size:13px;cursor:pointer;text-align:left;}
+.language-option:hover,.language-option.active{background:var(--bg3);color:var(--text);}
+.topbar-user{position:relative;display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:10px;cursor:pointer;color:var(--text2);}
+.topbar-user:hover{background:var(--bg3);color:var(--text);}
+.topbar-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:12px;font-weight:700;border:2px solid rgba(255,255,255,.18);}
+.topbar-user-name{font-size:13px;font-weight:600;}
+.user-dropdown{display:none;position:absolute;right:0;top:calc(100% + 8px);width:238px;background:var(--bg2);border:1px solid var(--border2);border-radius:12px;box-shadow:var(--shadow-lg);padding:8px;z-index:120;}
+.topbar-user:hover .user-dropdown,.topbar-user:focus-within .user-dropdown{display:block;}
+.dropdown-head{padding:10px;border-bottom:1px solid var(--border);margin-bottom:6px;}
+.dropdown-name{font-size:13px;font-weight:700;color:var(--text);}
+.dropdown-role{font-size:11px;color:var(--text3);margin-top:3px;}
+.dropdown-item{width:100%;display:flex;align-items:center;gap:10px;padding:9px 10px;border:0;background:transparent;color:var(--text2);border-radius:8px;font-size:13px;font-family:var(--font);text-align:left;cursor:pointer;}
+.dropdown-item:hover{background:var(--bg3);color:var(--text);}
+.dropdown-item.danger:hover{background:rgba(239,68,68,.12);color:var(--red);}
 
 .content{padding:26px;flex:1;overflow-y:auto;min-height:0;}
 .page{display:none;animation:fadeIn .2s ease;}
@@ -2359,6 +2384,257 @@ body.light-mode .glow-amber{text-shadow:none;}
 .loading{display:inline-block;width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
+/* ── V1 INTERNAL VISUAL LAYER ── */
+:root{
+  --bg:#0b0f1a;
+  --bg2:#0d1120;
+  --bg3:#131729;
+  --bg4:#191d32;
+  --bg5:#1f243c;
+  --border:rgba(255,255,255,0.08);
+  --border2:rgba(255,255,255,0.15);
+  --border-2:var(--border2);
+  --text:#e2e8f0;
+  --text2:#8b9ab4;
+  --text3:#64748b;
+  --fg-1:var(--text);
+  --fg-2:var(--text2);
+  --fg-3:var(--text3);
+  --panel:var(--bg2);
+  --panel-2:var(--bg3);
+  --accent:#6366f1;
+  --accent2:#4f46e5;
+  --accent-2:var(--accent2);
+  --accent-glow:rgba(99,102,241,0.15);
+  --accent-soft:var(--accent-glow);
+  --accent-soft-2:rgba(99,102,241,0.24);
+  --teal:#22d3ee;
+  --green:#34d399;
+  --red:#ef4444;
+  --amber:#fbbf24;
+  --purple:#a78bfa;
+  --pink:#f472b6;
+  --blue:#6366f1;
+  --shadow-sm:0 1px 4px 0 rgba(0,0,0,.4);
+  --shadow-md:0 8px 32px rgba(0,0,0,.5);
+  --shadow-lg:0 24px 64px rgba(0,0,0,.6);
+}
+body.light-mode{
+  --bg:#f5f6fa;
+  --bg2:#ffffff;
+  --bg3:#f0f1f8;
+  --bg4:#e8eaf3;
+  --bg5:#dde0ef;
+  --border:#e4e6f0;
+  --border2:#d0d3e8;
+  --border-2:var(--border2);
+  --text:#111827;
+  --text2:#374151;
+  --text3:#6b7280;
+  --fg-1:var(--text);
+  --fg-2:var(--text2);
+  --fg-3:var(--text3);
+  --panel:var(--bg2);
+  --panel-2:var(--bg3);
+  --accent:#6366f1;
+  --accent2:#4f46e5;
+  --accent-2:var(--accent2);
+  --accent-glow:rgba(99,102,241,0.09);
+  --accent-soft:var(--accent-glow);
+  --accent-soft-2:rgba(99,102,241,0.16);
+  --teal:#0891b2;
+  --green:#16a34a;
+  --red:#dc2626;
+  --amber:#d97706;
+  --purple:#7c3aed;
+  --pink:#db2777;
+  --blue:#6366f1;
+  --shadow-sm:0 1px 2px 0 rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.04);
+  --shadow-md:0 4px 16px rgba(0,0,0,.08),0 1px 4px rgba(0,0,0,.04);
+  --shadow-lg:0 20px 60px rgba(0,0,0,.1);
+}
+.stars{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:
+  radial-gradient(ellipse at 15% 10%, rgba(99,102,241,.16), transparent 36%),
+  radial-gradient(ellipse at 85% 20%, rgba(34,211,238,.10), transparent 34%),
+  radial-gradient(ellipse at 65% 90%, rgba(167,139,250,.12), transparent 38%);
+}
+body.light-mode .stars{display:none;}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--dur,3s) var(--delay,0s) infinite ease-in-out;}
+@keyframes twinkle{0%,100%{opacity:.08;transform:scale(.8)}50%{opacity:.32;transform:scale(1.15)}}
+#app-wrapper{z-index:1;}
+.sidebar,.main,.sidebar-expand-fab{position:fixed;}
+.topbar{backdrop-filter:blur(16px);background:rgba(13,17,32,0.85);}
+body.light-mode .topbar{backdrop-filter:none;background:var(--bg2);}
+.card,.stat-card,.fw-card{position:relative;overflow:hidden;transition:border-color .2s,box-shadow .2s,transform .2s;}
+.card::before,.stat-card::before,.fw-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.035) 0%,transparent 60%);pointer-events:none;}
+body.light-mode .card::before,body.light-mode .stat-card::before,body.light-mode .fw-card::before{display:none;}
+.card:hover{border-color:var(--border2);transform:translateY(-1px);}
+.stat-card:hover,.fw-card:hover{transform:translateY(-3px);}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--purple));box-shadow:0 4px 14px rgba(99,102,241,0.4);}
+.btn-primary:hover{box-shadow:0 6px 20px rgba(99,102,241,0.5);transform:translateY(-1px);}
+.nav-icon i,.btn i,.topbar-btn i,.sidebar-toggle i,.sidebar-expand-fab i{font-size:18px;line-height:1;}
+.skote-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:18px;}
+.skote-panel{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;}
+.skote-panel::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.035),transparent 58%);pointer-events:none;}
+.skote-span-4{grid-column:span 4}.skote-span-5{grid-column:span 5}.skote-span-7{grid-column:span 7}.skote-span-8{grid-column:span 8}.skote-span-12{grid-column:span 12}
+.metric-card{background:linear-gradient(180deg,var(--bg3),var(--bg2));border:1px solid var(--border);border-radius:12px;padding:16px;min-height:128px;position:relative;overflow:hidden;}
+.metric-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;}
+.metric-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:21px;box-shadow:0 8px 22px rgba(0,0,0,.22);}
+.metric-label{font-size:12px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.06em;}
+.metric-value{font-size:28px;font-weight:700;letter-spacing:-.6px;color:var(--text);line-height:1;}
+.metric-sub{font-size:12px;color:var(--text3);margin-top:6px;line-height:1.45;}
+.trend-pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:3px 8px;font-size:11px;font-weight:700;}
+.trend-up{background:rgba(52,211,153,.14);color:var(--green)}.trend-down{background:rgba(239,68,68,.14);color:var(--red)}.trend-flat{background:rgba(148,163,184,.14);color:var(--text3)}
+.sparkline-mini{display:flex;gap:4px;align-items:flex-end;height:38px;margin-top:12px;}
+.sparkline-mini span{flex:1;min-width:4px;border-radius:999px;background:linear-gradient(180deg,var(--accent),var(--teal));opacity:.9;}
+.summary-list{display:flex;flex-direction:column;gap:12px;}
+.summary-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.summary-row:last-child{border-bottom:none;}
+.summary-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.summary-name{font-size:13px;font-weight:600;color:var(--text);}
+.summary-meta{font-size:11px;color:var(--text3);margin-top:2px;}
+.summary-value{margin-left:auto;text-align:right;font-size:18px;font-weight:700;color:var(--text);}
+.donut-wrap{display:flex;align-items:center;gap:24px;min-height:246px;}
+.donut{width:174px;height:174px;border-radius:50%;display:grid;place-items:center;position:relative;flex-shrink:0;background:conic-gradient(var(--accent) 0deg,var(--accent) 90deg,var(--green) 90deg,var(--green) 180deg,var(--amber) 180deg,var(--amber) 270deg,var(--red) 270deg);}
+.donut::after{content:'';position:absolute;inset:24px;border-radius:50%;background:var(--bg2);border:1px solid var(--border);}
+.donut-center{position:relative;z-index:1;text-align:center;}
+.donut-center strong{display:block;font-size:30px;line-height:1;color:var(--text);}
+.donut-center span{display:block;font-size:11px;color:var(--text3);margin-top:5px;text-transform:uppercase;letter-spacing:.08em;}
+.hbar-list{display:flex;flex-direction:column;gap:12px;}
+.hbar-row{display:grid;grid-template-columns:92px 1fr 42px;gap:10px;align-items:center;}
+.hbar-label{font-size:12px;color:var(--text2);font-weight:600;}
+.hbar-track{height:8px;background:var(--bg4);border:1px solid var(--border);border-radius:999px;overflow:hidden;}
+.hbar-fill{height:100%;border-radius:999px;}
+.analytics-bars{display:flex;align-items:flex-end;gap:10px;height:210px;padding:12px 4px 0;border-bottom:1px solid var(--border);}
+.analytics-bar{flex:1;min-width:18px;border-radius:8px 8px 0 0;background:linear-gradient(180deg,var(--accent),var(--purple));position:relative;}
+.analytics-bar span{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--text3);}
+.email-chart{padding:4px 0 0;}
+.email-chart-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px;}
+.email-title{font-size:16px;font-weight:700;color:var(--text);}
+.email-tabs{display:flex;align-items:center;gap:20px;font-size:13px;font-weight:700;color:var(--text);}
+.email-tabs span{padding:9px 12px;border-radius:4px;cursor:pointer;}
+.email-tabs .active{background:#5b6ee1;color:#fff;}
+.email-plot{display:grid;grid-template-columns:44px 1fr;gap:0;min-height:332px;}
+.email-y{display:grid;grid-template-rows:repeat(6,1fr);height:260px;padding-top:2px;color:#dbeafe;font-size:11px;text-align:right;padding-right:12px;}
+.email-y span{transform:translateY(-8px);}
+.email-area{position:relative;height:260px;border-bottom:1px solid rgba(255,255,255,.72);background:repeating-linear-gradient(to bottom,rgba(255,255,255,.055) 0 1px,transparent 1px calc(20%));}
+.email-bars{position:absolute;inset:0;display:grid;grid-template-columns:repeat(12,1fr);align-items:end;gap:30px;padding:0 18px;}
+.email-month{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0;}
+.email-stack{width:18px;display:flex;flex-direction:column-reverse;border-radius:0;overflow:hidden;}
+.email-seg-a{background:#5669e6}.email-seg-b{background:#f3b547}.email-seg-c{background:#34c38f}
+.email-x{grid-column:2;display:grid;grid-template-columns:repeat(12,1fr);gap:30px;padding:9px 18px 0;color:#dbeafe;font-size:13px;text-align:center;}
+.email-legend{display:flex;justify-content:center;gap:18px;margin-top:18px;color:var(--text3);font-size:13px;}
+.email-legend span{display:inline-flex;align-items:center;gap:6px;}
+.email-swatch{width:14px;height:14px;border-radius:1px;border:1px solid rgba(255,255,255,.35);}
+.earning-layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(360px,1fr);gap:22px;}
+.earning-card{background:#293144;border:1px solid rgba(255,255,255,.035);border-radius:4px;padding:22px 24px;min-height:362px;position:relative;overflow:hidden;}
+.earning-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px;}
+.earning-title{font-size:15px;font-weight:700;color:#fff;}
+.earning-tabs{display:flex;gap:8px;align-items:center;}
+.earning-tabs span{border:1px solid rgba(255,255,255,.06);background:#252d3e;color:#dbeafe;border-radius:2px;padding:7px 12px;font-size:12px;font-weight:700;}
+.earning-tabs .active{background:#556ee6;color:#fff;border-color:#556ee6;}
+.earning-body{display:grid;grid-template-columns:210px 1fr;gap:26px;align-items:end;}
+.earning-copy{align-self:start;padding-top:4px;}
+.earning-muted{font-size:13px;color:#c9d4ff;margin-bottom:16px;}
+.earning-value{font-size:22px;font-weight:700;color:#fff;margin-bottom:10px;}
+.earning-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 7px;border-radius:4px;background:rgba(52,195,143,.18);color:#34c38f;font-size:12px;font-weight:700;margin-right:8px;}
+.earning-btn{display:inline-flex;align-items:center;gap:7px;margin-top:20px;background:#556ee6;color:#fff;border-radius:3px;padding:9px 12px;font-size:12px;font-weight:700;}
+.earning-last{margin-top:26px;color:#c9d4ff;font-size:13px;}
+.earning-last strong{display:block;color:#fff;font-size:19px;margin-top:8px;}
+.line-chart{height:250px;position:relative;border-bottom:1px solid rgba(255,255,255,.72);background:repeating-linear-gradient(to bottom,rgba(255,255,255,.055) 0 1px,transparent 1px 20%);}
+.line-y{position:absolute;left:0;top:0;bottom:0;width:34px;display:grid;grid-template-rows:repeat(7,1fr);color:#c9d4ff;font-size:11px;text-align:right;padding-right:9px;}
+.line-svg{position:absolute;left:44px;right:0;top:0;bottom:0;width:calc(100% - 44px);height:100%;overflow:visible;}
+.line-x{position:absolute;left:44px;right:0;bottom:-27px;display:grid;grid-template-columns:repeat(12,1fr);color:#c9d4ff;font-size:12px;text-align:center;}
+.risk-analytics-card{background:#293144;border:1px solid rgba(255,255,255,.035);border-radius:4px;padding:22px 24px;min-height:362px;}
+.sales-donut-wrap{height:250px;display:flex;align-items:center;justify-content:center;}
+.sales-donut{width:220px;height:220px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(#556ee6 0 168deg,#34c38f 168deg 282deg,#f46a6a 282deg 360deg);}
+.sales-donut::before{content:'';position:absolute;inset:-2px;border-radius:50%;border:2px solid rgba(255,255,255,.8);}
+.sales-donut::after{content:'';position:absolute;inset:34px;border-radius:50%;background:#293144;border:2px solid rgba(255,255,255,.75);}
+.sales-legend{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:12px;}
+.sales-item{display:flex;align-items:flex-start;gap:9px;color:#c9d4ff;font-size:13px;}
+.sales-dot{width:10px;height:10px;border-radius:50%;margin-top:4px;flex-shrink:0;}
+.sales-item strong{display:block;color:#fff;font-size:17px;margin-top:8px;}
+.risk-coin-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-bottom:22px;}
+.risk-coin{background:#293144;border:1px solid rgba(255,255,255,.035);border-radius:4px;padding:24px 22px 20px;min-height:144px;display:grid;grid-template-columns:190px 1fr;gap:18px;align-items:end;overflow:hidden;}
+.risk-coin-head{display:flex;align-items:center;gap:18px;margin-bottom:28px;color:#fff;font-size:15px;font-weight:500;}
+.risk-coin-icon{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.risk-coin-value{font-size:18px;font-weight:700;color:#fff;margin-bottom:6px;}
+.risk-coin-trend{font-size:14px;color:#dbeafe;display:flex;align-items:center;gap:7px;}
+.risk-coin-trend.up i{color:#34c38f}.risk-coin-trend.down i{color:#f46a6a}
+.risk-spark{height:58px;width:100%;align-self:end;}
+.risk-spark polyline{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;}
+.findings-snapshot-card{padding:0;background:transparent;border:0;box-shadow:none;}
+.finding-overview{background:#293144;border:1px solid rgba(255,255,255,.035);border-radius:4px;padding:20px 22px 24px;min-height:340px;}
+.finding-overview-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:16px;}
+.finding-overview-title{font-size:16px;font-weight:700;color:#fff;}
+.finding-range{display:flex;gap:8px;align-items:center;}
+.finding-range span{background:#313a50;color:#dbeafe;border-radius:4px;padding:8px 11px;font-size:12px;font-weight:700;}
+.finding-range .active{background:#556ee6;color:#fff;}
+.area-chart{height:252px;position:relative;border-bottom:1px solid rgba(255,255,255,.16);background:repeating-linear-gradient(to bottom,rgba(255,255,255,.055) 0 1px,transparent 1px 20%);}
+.area-y{position:absolute;left:0;top:0;bottom:0;width:56px;display:grid;grid-template-rows:repeat(7,1fr);color:#dbeafe;font-size:12px;text-align:right;padding-right:12px;}
+.area-y span{transform:translateY(-8px);}
+.area-svg{position:absolute;left:66px;right:0;top:0;bottom:0;width:calc(100% - 66px);height:100%;overflow:visible;}
+.area-x{position:absolute;left:66px;right:0;bottom:-29px;display:grid;grid-template-columns:repeat(8,1fr);color:#dbeafe;font-size:13px;text-align:center;}
+.finding-severity-legend{display:flex;justify-content:center;gap:18px;margin-top:38px;color:#c9d4ff;font-size:13px;}
+.finding-severity-legend span{display:inline-flex;align-items:center;gap:7px;}
+.task-shell{display:grid;grid-template-columns:minmax(0,2fr) minmax(320px,1fr);gap:18px;align-items:start;}
+.task-section{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:20px;box-shadow:var(--shadow-sm);margin-bottom:18px;}
+.task-section-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:16px;}
+.task-row{display:grid;grid-template-columns:28px minmax(0,1fr) 170px 120px 44px;gap:14px;align-items:center;padding:14px 10px;border-bottom:1px solid var(--border);}
+.task-row:last-child{border-bottom:0;}
+.task-check{width:16px;height:16px;border:1px solid var(--border2);border-radius:4px;appearance:none;background:transparent;cursor:pointer;}
+.task-check:checked{background:var(--accent);border-color:var(--accent);box-shadow:inset 0 0 0 3px var(--bg2);}
+.task-name{font-size:13px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.task-meta{font-size:11px;color:var(--text3);margin-top:4px;}
+.task-avatars{display:flex;align-items:center;justify-content:center;}
+.task-avatar{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-left:-7px;border:2px solid var(--bg2);font-size:10px;font-weight:700;color:white;background:linear-gradient(135deg,#38bdf8,#6366f1);}
+.task-avatar:first-child{margin-left:0;}
+.task-chart{height:230px;position:relative;padding:12px 10px 0;}
+.task-chart svg{width:100%;height:100%;overflow:visible;}
+.task-recent{display:flex;flex-direction:column;gap:0;}
+.task-recent-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);}
+.task-recent-row:last-child{border-bottom:0;}
+.kanban-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;}
+.kanban-col{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:18px;box-shadow:var(--shadow-sm);}
+.kanban-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.kanban-title{font-size:15px;font-weight:700;color:var(--text);}
+.kanban-card{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:16px;margin-bottom:14px;}
+.kanban-card-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.kanban-card-date{font-size:12px;color:var(--text3);margin-bottom:16px;}
+.kanban-card-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;}
+.task-form-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:22px;box-shadow:var(--shadow-sm);}
+.task-editor{border:1px solid var(--border2);border-radius:6px;background:var(--bg);overflow:hidden;}
+.task-editor-toolbar{display:flex;gap:4px;align-items:center;border-bottom:1px solid var(--border);background:var(--bg3);padding:7px;}
+.task-editor-toolbar span{width:28px;height:26px;display:flex;align-items:center;justify-content:center;color:var(--text3);border-radius:4px;font-weight:700;}
+.task-editor-toolbar span:hover{background:var(--bg4);color:var(--text);}
+.task-editor textarea{border:0;border-radius:0;background:transparent;min-height:180px;resize:vertical;}
+.calendar-layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(320px,.8fr);gap:18px;}
+.calendar-panel{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:18px;box-shadow:var(--shadow-sm);}
+.calendar-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px;}
+.calendar-month{font-size:18px;font-weight:800;color:var(--text);}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;}
+.calendar-weekday{font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text3);text-align:center;padding:8px 0;}
+.calendar-day{min-height:104px;border:1px solid var(--border);border-radius:8px;background:var(--bg);padding:8px;cursor:pointer;transition:all .15s;overflow:hidden;}
+.calendar-day:hover{border-color:var(--accent);transform:translateY(-1px);}
+.calendar-day.muted{opacity:.42;}
+.calendar-day.today{box-shadow:inset 0 0 0 1px var(--accent);}
+.calendar-date{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:6px;}
+.calendar-chip{display:block;border-radius:5px;padding:4px 6px;margin-top:4px;font-size:10px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#fff;}
+.calendar-chip.audit{background:#ef4444;}
+.calendar-chip.meeting{background:#6366f1;}
+.calendar-chip.sync{background:#10b981;}
+.calendar-chip.deadline{background:#f59e0b;}
+.calendar-chip.other{background:#64748b;}
+.event-list{display:flex;flex-direction:column;gap:10px;}
+.event-item{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);}
+.event-dot{width:10px;height:10px;border-radius:999px;margin-top:5px;flex-shrink:0;background:var(--accent);}
+.event-title{font-size:13px;font-weight:700;color:var(--text);}
+.event-meta{font-size:11px;color:var(--text3);margin-top:4px;line-height:1.5;}
+@media (max-width:1100px){.skote-span-4,.skote-span-5,.skote-span-7,.skote-span-8{grid-column:span 12}.donut-wrap{flex-direction:column;align-items:flex-start}.hbar-row{grid-template-columns:82px 1fr 36px}}
+@media (max-width:1200px){.earning-layout{grid-template-columns:1fr}.earning-body{grid-template-columns:1fr}.line-chart{margin-top:12px}.sales-legend{grid-template-columns:1fr}.risk-coin-grid{grid-template-columns:1fr}.risk-coin{grid-template-columns:1fr}}
+@media (max-width:900px){.email-bars,.email-x{gap:12px;padding-left:8px;padding-right:8px}.email-stack{width:14px}.email-tabs{gap:8px}.email-plot{grid-template-columns:34px 1fr}}
+@media(max-width:1100px){.task-shell,.calendar-layout{grid-template-columns:1fr}.kanban-grid{grid-template-columns:1fr}.task-row{grid-template-columns:28px minmax(0,1fr) 110px 96px 40px}}
+
 /* ── LOGIN OVERLAY ── */
 #login-overlay{
   position:fixed;inset:0;z-index:9999;
@@ -2426,6 +2702,7 @@ body.light-mode .login-card{
 </head>
 
 <body>
+    <div class="stars" id="stars-bg"></div>
 
     <div id="login-overlay"
         style="position:fixed; inset:0; z-index:9999; display:flex; align-items:center; justify-content:center; flex-direction:column; background:#050505; overflow:hidden;">
@@ -2486,83 +2763,82 @@ body.light-mode .login-card{
       <div class="brand-name">Aegis</div>
       <div class="brand-tagline">GRC Platform</div>
     </div>
-    <div class="sidebar-toggle" onclick="toggleSidebar()" id="toggle-btn">◀</div>
+    <div class="sidebar-toggle" onclick="toggleSidebar()" id="toggle-btn"><i class="ph ph-caret-left"></i></div>
   </div>
 
   <div class="sidebar-section">Overview</div>
   <div class="nav-item active" onclick="nav('home')" id="nav-home" data-label="Home">
-    <div class="nav-icon">🏠</div><span class="nav-label">Home</span>
+    <div class="nav-icon"><i class="ph ph-house"></i></div><span class="nav-label">Home</span>
   </div>
   <div class="nav-item" onclick="nav('reports')" id="nav-reports" data-label="Reports">
-    <div class="nav-icon">📊</div><span class="nav-label">Reports</span>
+    <div class="nav-icon"><i class="ph ph-chart-bar"></i></div><span class="nav-label">Reports</span>
   </div>
 
   <div class="sidebar-section">Continuous Monitoring</div>
   <div class="nav-item" onclick="nav('frameworks')" id="nav-frameworks" data-label="Frameworks">
-    <div class="nav-icon">📐</div><span class="nav-label">Frameworks</span>
+    <div class="nav-icon"><i class="ph ph-ruler"></i></div><span class="nav-label">Frameworks</span>
   </div>
   <div class="nav-item" onclick="nav('findings')" id="nav-findings" data-label="Findings">
-    <div class="nav-icon">🔍</div><span class="nav-label">Findings</span>
+    <div class="nav-icon"><i class="ph ph-magnifying-glass"></i></div><span class="nav-label">Findings</span>
     <span class="nav-badge b-amber" id="nb-findings">0</span>
   </div>
   <div class="nav-item" onclick="nav('controls')" id="nav-controls" data-label="Controls">
-    <div class="nav-icon">🛡️</div><span class="nav-label">Controls</span>
+    <div class="nav-icon"><i class="ph ph-shield-check"></i></div><span class="nav-label">Controls</span>
   </div>
   <div class="nav-item" onclick="nav('policies')" id="nav-policies" data-label="Policies">
-    <div class="nav-icon">📄</div><span class="nav-label">Policies</span>
+    <div class="nav-icon"><i class="ph ph-file-text"></i></div><span class="nav-label">Policies</span>
   </div>
 
   <div class="sidebar-section">Risk Management</div>
   <div class="nav-item" onclick="nav('risks')" id="nav-risks" data-label="Risks">
-    <div class="nav-icon">⚠️</div><span class="nav-label">Risks</span>
+    <div class="nav-icon"><i class="ph ph-warning"></i></div><span class="nav-label">Risks</span>
     <span class="nav-badge b-red" id="nb-risks">0</span>
   </div>
 
   <div class="sidebar-section">Data</div>
   <div class="nav-item" onclick="nav('plugins')" id="nav-plugins" data-label="Integrations">
-    <div class="nav-icon">🔌</div><span class="nav-label">Integrations</span>
+    <div class="nav-icon"><i class="ph ph-plug"></i></div><span class="nav-label">Integrations</span>
   </div>
   <div class="nav-item" onclick="nav('evidence')" id="nav-evidence" data-label="Evidence">
-    <div class="nav-icon">📋</div><span class="nav-label">Evidence</span>
+    <div class="nav-icon"><i class="ph ph-clipboard-text"></i></div><span class="nav-label">Evidence</span>
   </div>
 
   <div class="sidebar-section">Management</div>
   <div class="nav-item" onclick="nav('assets')" id="nav-assets" data-label="Assets">
-    <div class="nav-icon">💻</div><span class="nav-label">Assets</span>
+    <div class="nav-icon"><i class="ph ph-laptop"></i></div><span class="nav-label">Assets</span>
   </div>
   <div class="nav-item" onclick="nav('vendors')" id="nav-vendors" data-label="Vendors">
-    <div class="nav-icon">🤝</div><span class="nav-label">Vendors</span>
+    <div class="nav-icon"><i class="ph ph-handshake"></i></div><span class="nav-label">Vendors</span>
   </div>
   <div class="nav-item" onclick="nav('audits')" id="nav-audits" data-label="Audits">
-    <div class="nav-icon">📁</div><span class="nav-label">Audits</span>
+    <div class="nav-icon"><i class="ph ph-folder"></i></div><span class="nav-label">Audits</span>
   </div>
 
-  <div class="sidebar-footer">
-    <div class="nav-item" onclick="nav('settings')" id="nav-settings" style="margin:0 0 4px;">
-      <div class="nav-icon">⚙️</div><span class="nav-label">Settings</span>
-    </div>
-    <div class="sidebar-user" onclick="nav('settings')" style="cursor:pointer">
-      <div class="user-avatar" id="sb-avatar">AK</div>
-      <div class="user-info">
-        <div class="user-name" id="sb-name">Loading…</div>
-        <div class="user-role" id="sb-role">—</div>
-      </div>
-    </div>
-    <div style="padding:6px 4px 0">
-      <button onclick="doLogout()" style="width:100%;background:transparent;border:1px solid var(--border2);color:var(--text3);border-radius:6px;padding:6px;font-size:12px;cursor:pointer;font-family:var(--font);transition:all .15s" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--red)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--text3)'">Sign Out</button>
-    </div>
+  <div class="sidebar-section">Tasks</div>
+  <div class="nav-item" onclick="nav('tasks-list')" id="nav-tasks-list" data-label="Tasks">
+    <div class="nav-icon"><i class="ph ph-list-checks"></i></div><span class="nav-label">Task List</span>
   </div>
+  <div class="nav-item" onclick="nav('tasks-kanban')" id="nav-tasks-kanban" data-label="Kanban Board">
+    <div class="nav-icon"><i class="ph ph-columns"></i></div><span class="nav-label">Kanban Board</span>
+  </div>
+  <div class="nav-item" onclick="nav('tasks-create')" id="nav-tasks-create" data-label="Create Task">
+    <div class="nav-icon"><i class="ph ph-plus-square"></i></div><span class="nav-label">Create Task</span>
+  </div>
+  <div class="nav-item" onclick="nav('calendar')" id="nav-calendar" data-label="Calendar">
+    <div class="nav-icon"><i class="ph ph-calendar-blank"></i></div><span class="nav-label">Calendar</span>
+  </div>
+
 </aside>
 
 <!-- Expand FAB when sidebar is collapsed -->
-<div class="sidebar-expand-fab" id="expand-fab" onclick="toggleSidebar()" title="Expand sidebar">▶</div>
+<div class="sidebar-expand-fab" id="expand-fab" onclick="toggleSidebar()" title="Expand sidebar"><i class="ph ph-caret-right"></i></div>
 
 <!-- ══════════ MAIN ══════════ -->
 <div class="main" id="main">
 
   <!-- AUDITOR BANNER -->
   <div class="auditor-banner" id="auditor-banner">
-    <span>👁️</span>
+    <span><i class="ph ph-eye"></i></span>
     <span class="auditor-badge">AUDITOR MODE</span>
     <span>You are viewing Aegis as an Auditor — read-only access with restricted data visibility</span>
     <button class="btn btn-sm" style="margin-left:auto;background:#92400e;color:#fef3c7;border:none;" onclick="exitAuditorMode()">Exit Auditor Mode</button>
@@ -2574,9 +2850,29 @@ body.light-mode .login-card{
     <div class="topbar-sep"></div>
     <span class="topbar-breadcrumb" id="topbar-bc">Aegis / Dashboard</span>
     <div class="topbar-right">
-      <div class="topbar-indicator"></div>
-      <span style="font-size:12px;color:var(--text3)">All systems operational</span>
-      <button class="topbar-btn" onclick="toggleTheme()" id="theme-toggle-btn">🌙 Dark</button>
+      <label class="topbar-search"><i class="ph ph-magnifying-glass"></i><input placeholder="Search..."></label>
+      <div class="language-menu" tabindex="0">
+        <button class="topbar-icon-btn" title="Language"><span class="topbar-flag" id="language-flag">🇺🇸</span></button>
+        <div class="language-dropdown">
+          <button class="language-option" id="lang-en" onclick="setLanguage('en')"><span>🇺🇸</span> English</button>
+          <button class="language-option" id="lang-ka" onclick="setLanguage('ka')"><span>🇬🇪</span> ქართული</button>
+        </div>
+      </div>
+      <button class="topbar-icon-btn" title="Notifications"><i class="ph ph-bell"></i><span class="topbar-dot">3</span></button>
+      <div class="topbar-user" tabindex="0">
+        <div class="topbar-avatar" id="top-avatar">AK</div>
+        <span class="topbar-user-name" id="top-user-name">admin</span>
+        <i class="ph ph-caret-down"></i>
+        <div class="user-dropdown">
+          <div class="dropdown-head">
+            <div class="dropdown-name" id="top-menu-name">Administrator</div>
+            <div class="dropdown-role" id="top-menu-role">Admin</div>
+          </div>
+          <button class="dropdown-item" onclick="nav('settings')"><i class="ph ph-gear"></i> Settings</button>
+          <button class="dropdown-item" onclick="toggleTheme()" id="theme-toggle-btn"><i class="ph ph-moon"></i> Dark Mode</button>
+          <button class="dropdown-item danger" onclick="doLogout()"><i class="ph ph-sign-out"></i> Logout</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -2600,22 +2896,22 @@ body.light-mode .login-card{
       <!-- Quick Stats -->
       <div class="grid g4" style="margin-bottom:32px;">
         <div class="stat-card blue" style="text-align:center;cursor:pointer;" onclick="nav('risks')">
-          <div style="font-size:28px;margin-bottom:4px;">⚠️</div>
+          <div class="stat-icon" style="font-size:22px;margin:0 auto 8px;"><i class="ph ph-warning"></i></div>
           <div class="stat-num glow-blue" id="hw-risks">0</div>
           <div class="stat-label">Active Risks</div>
         </div>
         <div class="stat-card red" style="text-align:center;cursor:pointer;" onclick="nav('findings')">
-          <div style="font-size:28px;margin-bottom:4px;">🔍</div>
+          <div class="stat-icon" style="font-size:22px;margin:0 auto 8px;"><i class="ph ph-magnifying-glass"></i></div>
           <div class="stat-num glow-red" id="hw-findings">0</div>
           <div class="stat-label">Open Findings</div>
         </div>
         <div class="stat-card green" style="text-align:center;cursor:pointer;" onclick="nav('evidence')">
-          <div style="font-size:28px;margin-bottom:4px;">📋</div>
+          <div class="stat-icon" style="font-size:22px;margin:0 auto 8px;"><i class="ph ph-clipboard-text"></i></div>
           <div class="stat-num glow-green" id="hw-evidence">0</div>
           <div class="stat-label">Evidence Items</div>
         </div>
         <div class="stat-card amber" style="text-align:center;cursor:pointer;" onclick="nav('plugins')">
-          <div style="font-size:28px;margin-bottom:4px;">🔌</div>
+          <div class="stat-icon" style="font-size:22px;margin:0 auto 8px;"><i class="ph ph-plug"></i></div>
           <div class="stat-num glow-amber" id="hw-plugins">0</div>
           <div class="stat-label">Connected Plugins</div>
         </div>
@@ -2627,23 +2923,23 @@ body.light-mode .login-card{
           <div class="card-title">Quick Actions</div>
           <div style="display:flex;flex-direction:column;gap:8px;">
             <button class="btn btn-ghost" style="justify-content:flex-start;text-align:left;padding:12px 14px;" onclick="openModal('modal-risk')">
-              <span style="width:28px;height:28px;background:var(--red-dim,#ef444415);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0">⚠️</span>
+              <span style="width:28px;height:28px;background:var(--red-dim,#ef444415);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ph ph-warning"></i></span>
               <div><div style="font-weight:500;font-size:13px;">Register a Risk</div><div style="font-size:11px;color:var(--text3)">Add new risk to the register</div></div>
             </button>
             <button class="btn btn-ghost" style="justify-content:flex-start;text-align:left;padding:12px 14px;" onclick="openModal('modal-finding')">
-              <span style="width:28px;height:28px;background:#f59e0b15;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0">🔍</span>
+              <span style="width:28px;height:28px;background:#f59e0b15;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ph ph-magnifying-glass"></i></span>
               <div><div style="font-weight:500;font-size:13px;">Register a Finding</div><div style="font-size:11px;color:var(--text3)">Log a compliance finding</div></div>
             </button>
             <button class="btn btn-ghost" style="justify-content:flex-start;text-align:left;padding:12px 14px;" onclick="nav('evidence')">
-              <span style="width:28px;height:28px;background:#06b6d415;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0">📋</span>
+              <span style="width:28px;height:28px;background:#06b6d415;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ph ph-clipboard-text"></i></span>
               <div><div style="font-weight:500;font-size:13px;">Collect Evidence</div><div style="font-size:11px;color:var(--text3)">Manual or API-driven collection</div></div>
             </button>
             <button class="btn btn-ghost" style="justify-content:flex-start;text-align:left;padding:12px 14px;" onclick="nav('plugins')">
-              <span style="width:28px;height:28px;background:rgba(99,102,241,0.12);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0">🔌</span>
+              <span style="width:28px;height:28px;background:rgba(99,102,241,0.12);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ph ph-plug"></i></span>
               <div><div style="font-weight:500;font-size:13px;">Connect a Plugin</div><div style="font-size:11px;color:var(--text3)">AD, Okta, Tenable and more</div></div>
             </button>
             <button class="btn btn-ghost" style="justify-content:flex-start;text-align:left;padding:12px 14px;" onclick="nav('reports')">
-              <span style="width:28px;height:28px;background:#10b98115;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0">📊</span>
+              <span style="width:28px;height:28px;background:#10b98115;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ph ph-chart-bar"></i></span>
               <div><div style="font-weight:500;font-size:13px;">View Reports</div><div style="font-size:11px;color:var(--text3)">Analytics & compliance score</div></div>
             </button>
           </div>
@@ -2673,8 +2969,8 @@ body.light-mode .login-card{
             </div>
           </div>
           <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;">
-            <button class="btn btn-primary btn-sm" onclick="nav('reports')">📊 View Reports</button>
-            <button class="btn btn-ghost btn-sm" onclick="nav('settings')">⚙️ Settings</button>
+            <button class="btn btn-primary btn-sm" onclick="nav('reports')"><i class="ph ph-chart-bar"></i> View Reports</button>
+            <button class="btn btn-ghost btn-sm" onclick="nav('settings')"><i class="ph ph-gear"></i> Settings</button>
           </div>
         </div>
       </div>
@@ -3050,6 +3346,62 @@ body.light-mode .login-card{
     <div class="card"><table><thead><tr><th>Audit</th><th>Framework</th><th>Type</th><th>Auditor</th><th>Start</th><th>Status</th><th>Evidence</th><th></th></tr></thead><tbody id="audits-tb"></tbody></table></div>
   </div>
 
+  <!-- ══════════ TASKS ══════════ -->
+  <div class="page" id="page-tasks-list">
+    <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;">
+      <div><div class="page-title">Task List</div><div class="page-sub">Upcoming work, team assignments, and completion trend</div></div>
+      <div style="display:flex;gap:10px;"><button class="btn btn-ghost" onclick="nav('tasks-kanban')"><i class="ph ph-columns"></i> Kanban</button><button class="btn btn-primary" onclick="nav('tasks-create')"><i class="ph ph-plus"></i> Create Task</button></div>
+    </div>
+    <div class="task-shell">
+      <div>
+        <div class="task-section"><div class="task-section-title">Upcoming</div><div id="task-list-upcoming"></div></div>
+        <div class="task-section"><div class="task-section-title">In Progress</div><div id="task-list-progress"></div></div>
+        <div class="task-section"><div class="task-section-title">Completed</div><div id="task-list-completed"></div></div>
+      </div>
+      <div>
+        <div class="task-section"><div class="task-section-title">Tasks</div><div id="task-chart"></div></div>
+        <div class="task-section"><div class="task-section-title">Recent Tasks</div><div class="task-recent" id="task-recent"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-tasks-kanban">
+    <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;">
+      <div><div class="page-title">Kanban Board</div><div class="page-sub">Move work by status and track ownership</div></div>
+      <button class="btn btn-primary" onclick="nav('tasks-create')"><i class="ph ph-plus"></i> Add New</button>
+    </div>
+    <div class="kanban-grid" id="kanban-board"></div>
+  </div>
+
+  <div class="page" id="page-tasks-create">
+    <div class="page-header"><div class="page-title">Create Task</div><div class="page-sub">Create an operational task and assign team members</div></div>
+    <div class="task-form-card">
+      <div class="task-section-title">Create New Task</div>
+      <div class="form-row"><div class="form-group"><label>Task Name</label><input id="task-name" placeholder="Upcoming audit evidence review"></div><div class="form-group"><label>Status</label><select id="task-status"><option>Upcoming</option><option>In Progress</option><option>Completed</option></select></div></div>
+      <div class="form-row"><div class="form-group"><label>Start Date</label><input id="task-start" type="date"></div><div class="form-group"><label>Due Date</label><input id="task-due" type="date"></div></div>
+      <div class="form-row"><div class="form-group"><label>Team Members</label><input id="task-members" placeholder="Nino, Giorgi, Ana"></div><div class="form-group"><label>Budget / Effort</label><input id="task-budget" placeholder="40h or $500"></div></div>
+      <div class="form-group"><label>Task Description</label><div class="task-editor"><div class="task-editor-toolbar"><span>B</span><span>I</span><span><i class="ph ph-link"></i></span><span><i class="ph ph-list-bullets"></i></span><span><i class="ph ph-list-numbers"></i></span><span><i class="ph ph-quotes"></i></span></div><textarea id="task-desc" placeholder="Describe the task, acceptance criteria, and context..."></textarea></div></div>
+      <button class="btn btn-primary" onclick="addTask()"><i class="ph ph-check"></i> Create Task</button>
+    </div>
+  </div>
+
+  <div class="page" id="page-calendar">
+    <div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;">
+      <div><div class="page-title">Calendar</div><div class="page-sub">Plan upcoming audits, team meetings, weekly syncs, and reminders</div></div>
+      <button class="btn btn-primary" onclick="openEventModal()"><i class="ph ph-calendar-plus"></i> New Event</button>
+    </div>
+    <div class="calendar-layout">
+      <div class="calendar-panel">
+        <div class="calendar-head"><button class="btn btn-ghost btn-sm" onclick="moveCalendar(-1)"><i class="ph ph-caret-left"></i></button><div class="calendar-month" id="calendar-month"></div><button class="btn btn-ghost btn-sm" onclick="moveCalendar(1)"><i class="ph ph-caret-right"></i></button></div>
+        <div class="calendar-grid" id="calendar-grid"></div>
+      </div>
+      <div class="calendar-panel">
+        <div class="calendar-head"><div class="task-section-title" style="margin:0">Upcoming Events</div><button class="btn btn-ghost btn-sm" onclick="renderCalendar()"><i class="ph ph-arrows-clockwise"></i></button></div>
+        <div class="event-list" id="event-list"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- ══════════ POLICIES ══════════ -->
   <div class="page" id="page-policies">
     <div class="page-header"><div class="page-title">Policy Management</div><div class="page-sub">Create, approve, and maintain security policies</div></div>
@@ -3143,14 +3495,9 @@ body.light-mode .login-card{
         <div id="rf-sev-chart"></div>
       </div>
     </div>
-    <div class="grid g2" style="margin-bottom:18px;">
-      <div class="card">
-        <div class="card-title">Findings Snapshot</div>
+    <div class="grid" style="margin-bottom:18px;">
+      <div class="card findings-snapshot-card">
         <div id="rf-status-snapshot"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Severity Snapshot</div>
-        <div id="rf-severity-snapshot"></div>
       </div>
     </div>
     <div class="card">
@@ -3537,16 +3884,32 @@ body.light-mode .login-card{
   </div>
 </div>
 
+<div class="modal-overlay" id="modal-calendar-event">
+  <div class="modal"><h3><i class="ph ph-calendar-plus"></i> Calendar Event</h3>
+    <input type="hidden" id="event-id">
+    <div class="form-row"><div class="form-group"><label>Event Title</label><input id="event-title" placeholder="Upcoming audit, weekly sync, team meeting"></div><div class="form-group"><label>Type</label><select id="event-type"><option value="audit">Upcoming Audit</option><option value="meeting">Team Meeting</option><option value="sync">Weekly Sync</option><option value="deadline">Deadline</option><option value="other">Other</option></select></div></div>
+    <div class="form-row"><div class="form-group"><label>Date</label><input id="event-date" type="date"></div><div class="form-group"><label>Time</label><input id="event-time" type="time"></div></div>
+    <div class="form-group"><label>Invite People</label><input id="event-people" placeholder="nino@company.ge, giorgi@company.ge"></div>
+    <div class="form-group"><label>Notes</label><textarea id="event-notes" placeholder="Agenda, audit scope, or meeting notes..."></textarea></div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('modal-calendar-event')">Cancel</button><button class="btn btn-danger" id="event-delete-btn" onclick="deleteCalendarEvent()" style="display:none">Delete</button><button class="btn btn-primary" onclick="saveCalendarEvent()">Save Event</button></div>
+  </div>
+</div>
+
 
 <script>
-// Default to light theme for new design
-if(!localStorage.getItem('aegis_theme')) localStorage.setItem('aegis_theme', 'light');
+// Default to the v1 internal galaxy theme.
+if(!localStorage.getItem('aegis_theme')) localStorage.setItem('aegis_theme', 'dark');
+if(!localStorage.getItem('aegis_v1_visuals_applied')){
+  localStorage.setItem('aegis_theme', 'dark');
+  localStorage.setItem('aegis_v1_visuals_applied', '1');
+}
 </script>
 <script>
 // ═══════════════════════════════════════════
 // API CLIENT
 // ═══════════════════════════════════════════
 const API_BASE='/api';
+const AUTH_BYPASS=false;
 let currentUser=null;
 
 const api={
@@ -3585,6 +3948,7 @@ const api={
 
 // ─── LOGIN / LOGOUT ───
 function showLogin(){
+  if(AUTH_BYPASS){hideLogin();return;}
   document.getElementById('login-overlay').style.display='flex';
   document.getElementById('app-wrapper').style.display='none';
   document.getElementById('app-wrapper').style.position='';
@@ -3601,7 +3965,7 @@ function enterLocalDemo(){
   D.users=[{id:'u1',name:'Administrator',email:'admin@aegis.local',role:'Admin',dept:'Security',status:'Active'}];
   hideLogin();
   updateSidebarUser();
-  renderHome();
+  nav('home');
   notify('Local demo mode enabled','info');
 }
 async function doLogin(){
@@ -3636,6 +4000,7 @@ async function doLogin(){
 function doLogout(){
   localStorage.removeItem('aegis_token');
   currentUser=null;
+  if(AUTH_BYPASS){enterLocalDemo();return;}
   showLogin();
 }
 function updateSidebarUser(){
@@ -3648,6 +4013,14 @@ function updateSidebarUser(){
   if(av)av.textContent=initials;
   if(nm)nm.textContent=name;
   if(rl)rl.textContent=toDisplayEnum(currentUser.role||'');
+  const topAv=document.getElementById('top-avatar');
+  const topName=document.getElementById('top-user-name');
+  const menuName=document.getElementById('top-menu-name');
+  const menuRole=document.getElementById('top-menu-role');
+  if(topAv)topAv.textContent=initials;
+  if(topName)topName.textContent=(currentUser.role||'').toLowerCase()==='admin'?'admin':name.split(' ')[0];
+  if(menuName)menuName.textContent=name;
+  if(menuRole)menuRole.textContent=toDisplayEnum(currentUser.role||'');
 }
 
 const ENUM_LABELS={
@@ -3678,6 +4051,81 @@ function toApiEnum(value){
 }
 function normalizeFrameworkName(name){
   return FRAMEWORK_NAME_MAP[name]||name;
+}
+
+const I18N_KA={
+  'Home':'მთავარი','Reports':'რეპორტები','Frameworks':'ფრეიმვორქები','Findings':'ფაინდინგები','Controls':'კონტროლები','Policies':'პოლიტიკები','Risks':'რისკები','Integrations':'ინტეგრაციები','Evidence':'მტკიცებულებები','Assets':'აქტივები','Vendors':'ვენდორები','Audits':'აუდიტები','Task List':'თასქების სია','Kanban Board':'კანბან დაფა','Create Task':'თასქის შექმნა','Calendar':'კალენდარი',
+  'Overview':'მიმოხილვა','Continuous Monitoring':'უწყვეტი მონიტორინგი','Risk Management':'რისკების მართვა','Data':'მონაცემები','Management':'მენეჯმენტი','Tasks':'თასქები','Settings':'პარამეტრები','Logout':'გამოსვლა','Dark Mode':'მუქი რეჟიმი','Light Mode':'ღია რეჟიმი','Language':'ენა',
+  'Dashboard':'დეშბორდი','Aegis / Dashboard':'Aegis / დეშბორდი','Reports & Analytics':'რეპორტები და ანალიტიკა','Compliance dashboards, trend analysis, and exportable reports':'Compliance dashboards, trend analysis, and exportable reports',
+  'Overall Score':'საერთო ქულა','Evidence Items':'მტკიცებულებები','Framework Coverage':'ფრეიმვორქების დაფარვა','Program Health Snapshot':'პროგრამის ჯანმრთელობის სნეპშოტი','Reports Overview':'რეპორტების მიმოხილვა','Export Excel Report':'Excel რეპორტის ექსპორტი','Back To Reports':'რეპორტებში დაბრუნება',
+  'Risk Register':'რისკების რეესტრი','Risk Severity Distribution':'რისკების კრიტიკულობის განაწილება','Risk Snapshot':'რისკების სნეპშოტი','All Risks':'ყველა რისკი','Risk':'რისკი','Category':'კატეგორია','Severity':'კრიტიკულობა','Status':'სტატუსი','Owner':'მფლობელი',
+  'Findings Reporting':'ფაინდინგების რეპორტინგი','Finding Status Breakdown':'ფაინდინგების სტატუსები','Finding Severity Breakdown':'ფაინდინგების კრიტიკულობა','All Findings':'ყველა ფაინდინგი','Finding':'ფაინდინგი','Source':'წყარო','Created':'შექმნილია',
+  'Asset Inventory':'აქტივების ინვენტარი','Vendor Risk':'ვენდორის რისკი','Audit Management':'აუდიტის მართვა','Policy Management':'პოლიტიკების მართვა','Evidence Management':'მტკიცებულებების მართვა','Findings Register':'ფაინდინგების რეესტრი','Controls Library':'კონტროლების ბიბლიოთეკა',
+  'Add Asset':'აქტივის დამატება','Add Vendor':'ვენდორის დამატება','New Audit':'ახალი აუდიტი','New Policy':'ახალი პოლიტიკა','Add Evidence':'მტკიცებულების დამატება','Register Finding':'ფაინდინგის რეგისტრაცია','Register Risk':'რისკის რეგისტრაცია','Create Risk':'რისკის შექმნა',
+  'Upcoming':'მომავალი','In Progress':'მიმდინარე','Completed':'დასრულებული','Recent Tasks':'ბოლო თასქები','Complete Tasks':'დასრულებული თასქები','All Tasks':'ყველა თასქი','Create New Task':'ახალი თასქის შექმნა','Task Name':'თასქის სახელი','Task Description':'თასქის აღწერა','Start Date':'დაწყების თარიღი','Due Date':'დედლაინი','Team Members':'გუნდის წევრები','Budget / Effort':'ბიუჯეტი / Effort','Add New':'დამატება',
+  'Upcoming Events':'მომავალი ივენთები','New Event':'ახალი ივენთი','Calendar Event':'კალენდრის ივენთი','Event Title':'ივენთის სათაური','Type':'ტიპი','Date':'თარიღი','Time':'დრო','Invite People':'ხალხის მოწვევა','Notes':'შენიშვნები','Save Event':'ივენთის შენახვა','Delete':'წაშლა','Cancel':'გაუქმება','Upcoming Audit':'მომავალი აუდიტი','Team Meeting':'გუნდის შეხვედრა','Weekly Sync':'Weekly Sync','Deadline':'დედლაინი','Other':'სხვა',
+  'Users':'მომხმარებლები','Roles & Permissions':'როლები და უფლებები','Audit Log':'აუდიტის ლოგი','Auditor Mode':'აუდიტორის რეჟიმი','Appearance':'გარეგნობა','Theme':'თემა','Switch between dark and light mode':'გადართე მუქ და ღია რეჟიმებს შორის','Add User':'მომხმარებლის დამატება',
+  'Open':'ღია','Resolved':'დასრულებული','Critical':'კრიტიკული','High':'მაღალი','Medium':'საშუალო','Low':'დაბალი','Active':'აქტიური','Inactive':'არააქტიური','Approved':'დამტკიცებული','Pending':'მოლოდინში','Waiting':'მოლოდინში','Complete':'დასრულებული',
+  'Search...':'ძებნა...','Search assets...':'აქტივების ძებნა...','Search findings...':'ფაინდინგების ძებნა...','Search audits...':'აუდიტების ძებნა...','Search policies...':'პოლიტიკების ძებნა...','Enter Task Name...':'შეიყვანე Task-ის სახელი...','Describe the task, acceptance criteria, and context...':'აღწერე Task, acceptance criteria და კონტექსტი...','Nino, Giorgi, Ana':'ნინო, გიორგი, ანა','40h or $500':'40 სთ ან $500','Upcoming audit evidence review':'მომავალი აუდიტის მტკიცებულებების მომზადება'
+};
+const I18N_EN=Object.fromEntries(Object.entries(I18N_KA).map(([en,ka])=>[ka,en]));
+const I18N_ATTRS=['placeholder','title','aria-label'];
+let currentLang=localStorage.getItem('aegis_lang')||'en';
+function i18nTranslateText(text,lang=currentLang){
+  const clean=String(text||'').trim();
+  if(!clean)return text;
+  const dict=lang==='ka'?I18N_KA:I18N_EN;
+  if(clean.startsWith('Aegis / ')){
+    const tail=clean.slice(8);
+    return 'Aegis / '+(dict[tail]||tail);
+  }
+  return dict[clean]||text;
+}
+function applyLanguage(lang=currentLang){
+  try{
+    currentLang=lang;
+    localStorage.setItem('aegis_lang',lang);
+    const flag=document.getElementById('language-flag');
+    if(flag)flag.textContent=lang==='ka'?'🇬🇪':'🇺🇸';
+    document.getElementById('lang-en')?.classList.toggle('active',lang==='en');
+    document.getElementById('lang-ka')?.classList.toggle('active',lang==='ka');
+    document.documentElement.lang=lang==='ka'?'ka':'en';
+    if(!document.body)return;
+    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{
+    acceptNode(node){
+      const p=node.parentElement;
+      if(!p||['SCRIPT','STYLE','TEXTAREA','INPUT'].includes(p.tagName))return NodeFilter.FILTER_REJECT;
+      if(p.closest('.mono,.api-resp,.code,.language-dropdown'))return NodeFilter.FILTER_REJECT;
+      const clean=node.nodeValue.trim();
+      if(!clean)return NodeFilter.FILTER_REJECT;
+      const key=clean.startsWith('Aegis / ')?clean.slice(8):clean;
+      const hasTranslation=lang==='ka'?!!I18N_KA[key]:!!I18N_EN[key];
+      return hasTranslation?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
+    }
+  });
+    const nodes=[];
+    while(walker.nextNode())nodes.push(walker.currentNode);
+    nodes.forEach(node=>{
+      const value=node.nodeValue;
+      const leading=value.match(/^\s*/)[0];
+      const trailing=value.match(/\s*$/)[0];
+      node.nodeValue=leading+i18nTranslateText(value,lang)+trailing;
+    });
+    document.querySelectorAll('input,textarea,button,[title]').forEach(el=>{
+      I18N_ATTRS.forEach(attr=>{
+        if(!el.hasAttribute(attr))return;
+        const key='_i18n_'+attr;
+        if(el[key]===undefined)el[key]=el.getAttribute(attr);
+        el.setAttribute(attr,lang==='en'?el[key]:i18nTranslateText(el[key],lang));
+      });
+    });
+  }catch(e){
+    console.warn('Language apply failed:',e);
+  }
+}
+function setLanguage(lang){
+  applyLanguage(lang);
+  notify(lang==='ka'?'ენა გადართულია ქართულზე':'Language switched to English','info');
 }
 function syncCurrentUser(){
   if(!currentUser)return;
@@ -3712,18 +4160,22 @@ const adaptVendor=v=>({id:v.id,name:v.name,category:v.category||'',risk:toDispla
 const adaptAudit=a=>({id:a.id,name:a.title,framework:'General',type:toDisplayEnum(a.audit_type),status:toDisplayEnum(a.status),auditor:a.auditor||'',scope:a.scope||'',start:a.start_date?.slice(0,10)||'',end:a.end_date?.slice(0,10)||'',findings:a.findings_count||0,created:a.created_at?.slice(0,10)||today()});
 const adaptPolicy=p=>({id:p.id,name:p.title,desc:p.description||'',category:p.category||'',status:toDisplayEnum(p.status),owner:p.owner||'',version:p.version,review:p.review_date?.slice(0,10)||'',created:p.created_at?.slice(0,10)||today()});
 const adaptEvidence=e=>({id:e.id,name:e.title,source:e.source||'',control:e.control_id?String(e.control_id).slice(0,8).toUpperCase():'',status:toDisplayEnum(e.status),notes:e.description||'',created:e.created_at?.slice(0,10)||today()});
+const adaptTask=t=>({id:t.id,name:t.title,desc:t.description||'',status:toDisplayEnum(t.status),start:t.start_date?.slice(0,10)||'',due:t.due_date?.slice(0,10)||'',members:t.members||'',budget:t.budget||'',created:t.created_at?.slice(0,10)||today()});
+const adaptCalendarEvent=e=>({id:e.id,title:e.title,type:e.event_type||'other',date:e.event_date?.slice(0,10)||today(),time:(e.event_date?.slice(11,16)||'09:00'),people:e.people||'',notes:e.notes||''});
 
 // ─── LOAD ALL DATA FROM API ───
 async function loadAllData(){
   try{
-    const [risks,controls,assets,findings,vendors,audits,policies,evidence,frameworks]=await Promise.all([
+    const [risks,controls,assets,findings,vendors,audits,policies,evidence,frameworks,tasks,calendarEvents]=await Promise.all([
       api.get('/risks?limit=1000'),api.get('/controls?limit=1000'),api.get('/assets?limit=1000'),
       api.get('/findings?limit=1000'),api.get('/vendors?limit=1000'),api.get('/audits?limit=1000'),
       api.get('/policies?limit=1000'),api.get('/evidence?limit=1000'),api.get('/frameworks'),
+      api.get('/tasks?limit=1000'),api.get('/calendar-events?limit=1000'),
     ]);
     D.risks=risks.map(adaptRisk);D.controls=controls.map(adaptControl);D.assets=assets.map(adaptAsset);
     D.findings=findings.map(adaptFinding);D.vendors=vendors.map(adaptVendor);D.audits=audits.map(adaptAudit);
     D.policies=policies.map(adaptPolicy);D.evidence=evidence.map(adaptEvidence);
+    D.tasks=tasks.map(adaptTask);D.calendarEvents=calendarEvents.map(adaptCalendarEvent);
     syncCurrentUser();
     frameworks.forEach(fw=>{
       const key=normalizeFrameworkName(fw.name);
@@ -3751,7 +4203,7 @@ async function loadAllData(){
 // ═══════════════════════════════════════════
 const D={
   risks:[],gaps:[],controls:[],assets:[],evidence:[],findings:[],vendors:[],
-  audits:[],policies:[],evRules:[],schedules:[],auditLog:[],users:[],riskMeta:{},attachments:{},
+  audits:[],policies:[],tasks:[],calendarEvents:[],evRules:[],schedules:[],auditLog:[],users:[],riskMeta:{},attachments:{},
   matrixConfig:{
     likelihood_labels:["Rare","Unlikely","Possible","Likely","Almost Certain"],
     impact_labels:["Negligible","Minor","Moderate","Major","Catastrophic"],
@@ -3793,7 +4245,7 @@ function toggleSidebar(){
   const fab=document.getElementById('expand-fab');
   sb.classList.toggle('collapsed',!sidebarOpen);
   mn.classList.toggle('collapsed',!sidebarOpen);
-  tb.textContent=sidebarOpen?'◀':'▶';
+  tb.innerHTML=sidebarOpen?'<i class="ph ph-caret-left"></i>':'<i class="ph ph-caret-right"></i>';
   // show/hide FAB
   fab.style.display=sidebarOpen?'none':'flex';
 }
@@ -3801,20 +4253,22 @@ function toggleSidebar(){
 // ═══════════════════════════════════════════
 // NAVIGATION
 // ═══════════════════════════════════════════
-const titles={'home':'Home','risks':'Risk Register','risk-workspace':'Risk Register','gap-workspace':'Gap Register','risk-detail':'Risk Detail','vendor-detail':'Vendor Detail','policy-detail':'Policy Detail','audit-detail':'Audit Detail','asset-detail':'Asset Detail','evidence-detail':'Evidence Detail','gap-detail':'Gap Detail','controls':'Controls Library','assets':'Asset Inventory','evidence':'Evidence Management','findings':'Findings Register','vendors':'Vendor Risk','audits':'Audit Management','policies':'Policy Management','plugins':'Integrations','reports':'Reports & Analytics','report-risks':'Risk Severity Distribution','report-findings':'Findings Reporting','report-frameworks':'Framework Coverage Reporting','report-integrations':'Integrations Reporting','frameworks':'Frameworks & Controls','framework-nist':'NIST CSF 2.0','framework-iso':'ISO 27001','framework-soc2':'SOC 2','framework-gdpr':'GDPR','framework-pci':'PCI DSS','framework-cis':'CIS Controls','settings':'Settings'};
+const titles={'home':'Home','risks':'Risk Register','risk-workspace':'Risk Register','gap-workspace':'Gap Register','risk-detail':'Risk Detail','vendor-detail':'Vendor Detail','policy-detail':'Policy Detail','audit-detail':'Audit Detail','asset-detail':'Asset Detail','evidence-detail':'Evidence Detail','gap-detail':'Gap Detail','controls':'Controls Library','assets':'Asset Inventory','evidence':'Evidence Management','findings':'Findings Register','vendors':'Vendor Risk','audits':'Audit Management','tasks-list':'Task List','tasks-kanban':'Kanban Board','tasks-create':'Create Task','calendar':'Calendar','policies':'Policy Management','plugins':'Integrations','reports':'Reports & Analytics','report-risks':'Risk Severity Distribution','report-findings':'Findings Reporting','report-frameworks':'Framework Coverage Reporting','report-integrations':'Integrations Reporting','frameworks':'Frameworks & Controls','framework-nist':'NIST CSF 2.0','framework-iso':'ISO 27001','framework-soc2':'SOC 2','framework-gdpr':'GDPR','framework-pci':'PCI DSS','framework-cis':'CIS Controls','settings':'Settings'};
 function nav(page){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
   const navEl=document.getElementById('nav-'+page);
   if(navEl)navEl.classList.add('active');
-  document.getElementById('topbar-title').textContent=titles[page]||page;
-  document.getElementById('topbar-bc').textContent='Aegis / '+(titles[page]||page);
+  const rawTitle=titles[page]||page;
+  const viewTitle=currentLang==='ka'?i18nTranslateText(rawTitle,'ka'):rawTitle;
+  document.getElementById('topbar-title').textContent=viewTitle;
+  document.getElementById('topbar-bc').textContent='Aegis / '+viewTitle;
   renderPage(page);
-  requestAnimationFrame(()=>{const ct=document.querySelector('.content');if(ct)ct.scrollTop=0;window.scrollTo(0,0);});
+  requestAnimationFrame(()=>{applyLanguage(currentLang);const ct=document.querySelector('.content');if(ct)ct.scrollTop=0;window.scrollTo(0,0);});
 }
 function renderPage(p){
-  ({home:renderHome,risks:renderRiskRegisterHome,'risk-workspace':renderRiskWorkspace,'gap-workspace':renderGapWorkspace,'risk-detail':renderRiskDetail,'vendor-detail':renderVendorDetail,'policy-detail':renderPolicyDetail,'audit-detail':renderAuditDetail,'asset-detail':renderAssetDetail,'evidence-detail':renderEvidenceDetail,'gap-detail':renderGapDetail,controls:renderControls,assets:renderAssets,evidence:renderEvidence,findings:renderFindings,vendors:renderVendors,audits:renderAudits,policies:renderPolicies,plugins:renderPlugins,reports:renderReports,'report-risks':renderReportRisks,'report-findings':renderReportFindings,'report-frameworks':renderReportFrameworks,'report-integrations':renderReportIntegrations,frameworks:renderFrameworks,'framework-nist':renderNistFrameworkPage,'framework-iso':()=>renderFrameworkSummaryPage('fiso-controls-tb',FRAMEWORK_LIBRARY.iso),'framework-soc2':()=>renderFrameworkSummaryPage('fsoc2-controls-tb',FRAMEWORK_LIBRARY.soc2),'framework-gdpr':()=>renderFrameworkSummaryPage('fgdpr-controls-tb',FRAMEWORK_LIBRARY.gdpr),'framework-pci':()=>renderFrameworkSummaryPage('fpci-controls-tb',FRAMEWORK_LIBRARY.pci),'framework-cis':()=>renderFrameworkSummaryPage('fcis-controls-tb',FRAMEWORK_LIBRARY.cis),settings:renderSettings}[p]||(() => {}))();
+  ({home:renderHome,risks:renderRiskRegisterHome,'risk-workspace':renderRiskWorkspace,'gap-workspace':renderGapWorkspace,'risk-detail':renderRiskDetail,'vendor-detail':renderVendorDetail,'policy-detail':renderPolicyDetail,'audit-detail':renderAuditDetail,'asset-detail':renderAssetDetail,'evidence-detail':renderEvidenceDetail,'gap-detail':renderGapDetail,controls:renderControls,assets:renderAssets,evidence:renderEvidence,findings:renderFindings,vendors:renderVendors,audits:renderAudits,'tasks-list':renderTaskList,'tasks-kanban':renderTaskKanban,'tasks-create':renderCreateTask,calendar:renderCalendar,policies:renderPolicies,plugins:renderPlugins,reports:renderReports,'report-risks':renderReportRisks,'report-findings':renderReportFindings,'report-frameworks':renderReportFrameworks,'report-integrations':renderReportIntegrations,frameworks:renderFrameworks,'framework-nist':renderNistFrameworkPage,'framework-iso':()=>renderFrameworkSummaryPage('fiso-controls-tb',FRAMEWORK_LIBRARY.iso),'framework-soc2':()=>renderFrameworkSummaryPage('fsoc2-controls-tb',FRAMEWORK_LIBRARY.soc2),'framework-gdpr':()=>renderFrameworkSummaryPage('fgdpr-controls-tb',FRAMEWORK_LIBRARY.gdpr),'framework-pci':()=>renderFrameworkSummaryPage('fpci-controls-tb',FRAMEWORK_LIBRARY.pci),'framework-cis':()=>renderFrameworkSummaryPage('fcis-controls-tb',FRAMEWORK_LIBRARY.cis),settings:renderSettings}[p]||(() => {}))();
 }
 
 // ═══════════════════════════════════════════
@@ -5300,7 +5754,6 @@ function renderReportFindings(){
   renderFindingStatusChart('rf-find-chart');
   renderFindingSeverityChart('rf-sev-chart');
   renderFindingStatusSnapshot('rf-status-snapshot');
-  renderFindingSeveritySnapshot('rf-severity-snapshot');
   const tb=document.getElementById('rf-findings-tb');
   tb.innerHTML=D.findings.length?D.findings.map(f=>`<tr><td style="font-weight:500">${f.name}</td><td>${badge(f.severity)}</td><td>${f.source||'—'}</td><td>${badge(f.status)}</td><td style="color:var(--text3)">${f.created||'—'}</td></tr>`).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:32px">No findings registered.</td></tr>';
 }
@@ -5351,6 +5804,316 @@ function renderReportIntegrations(){
       : ((p.fields||[]).some(f=>(f.k||'').toLowerCase().includes('clientsecret')) ? 'OAuth / API' : 'Credential / API');
     return `<tr><td style="font-weight:500">${p.icon} ${p.name}</td><td>${badge(state.connected?'Active':'Inactive')}</td><td>${coverage}</td><td style="color:var(--text3)">${connType}</td></tr>`;
   }).join(''):'<tr><td colspan="4" style="text-align:center;color:var(--text3);padding:32px">No integrations configured.</td></tr>';
+}
+
+function _countBy(list,key,values){
+  return values.reduce((acc,v)=>{acc[v]=list.filter(x=>(x[key]||'')===v).length;return acc;},{});
+}
+function _trend(current,seed=0){
+  const previous=Math.max(0,Math.round(current*(0.72+((seed%4)*0.06)))-((seed%2)?1:0));
+  const diff=current-previous;
+  const pct=previous?Math.round(diff/previous*100):(current?100:0);
+  return {previous,diff,pct};
+}
+function _trendPill(t){
+  const cls=t.diff>0?'trend-up':t.diff<0?'trend-down':'trend-flat';
+  const icon=t.diff>0?'ph-trend-up':t.diff<0?'ph-trend-down':'ph-minus';
+  const label=t.diff>0?`+${t.pct}%`:t.diff<0?`${t.pct}%`:'0%';
+  return `<span class="trend-pill ${cls}"><i class="ph ${icon}"></i>${label}</span>`;
+}
+function _spark(values,color='linear-gradient(180deg,var(--accent),var(--teal))'){
+  const max=Math.max(...values,1);
+  return `<div class="sparkline-mini">${values.map(v=>`<span style="height:${Math.max(14,Math.round(v/max*38))}px;background:${color}"></span>`).join('')}</div>`;
+}
+function _sparkSvg(values,color){
+  const max=Math.max(...values,1), min=Math.min(...values,0);
+  const span=Math.max(max-min,1);
+  const pts=values.map((v,i)=>`${Math.round(i*(220/(values.length-1)))},${Math.round(52-((v-min)/span*44))}`).join(' ');
+  return `<svg class="risk-spark" viewBox="0 0 220 58" preserveAspectRatio="none"><polyline points="${pts}" stroke="${color}"/></svg>`;
+}
+function _riskCoinCards(){
+  const critical=D.risks.filter(r=>r.severity==='Critical').length;
+  const high=D.risks.filter(r=>r.severity==='High').length;
+  const medLow=D.risks.filter(r=>r.severity==='Medium'||r.severity==='Low').length;
+  const defs=[
+    {name:'Critical Risk',icon:'ph-fire',value:critical,color:'#f1b44c',line:'#f1b44c',trend:_trend(critical,1),series:[1,2,1,4,3,5,critical+3,critical+2,critical+5,critical+4]},
+    {name:'High Risk',icon:'ph-warning',value:high,color:'#556ee6',line:'#556ee6',trend:_trend(high,2),series:[2,4,5,3,7,5,6,3,4,high+4]},
+    {name:'Medium / Low',icon:'ph-shield-check',value:medLow,color:'#50a5f1',line:'#50a5f1',trend:_trend(medLow,3),series:[1,2,3,6,4,4,2,3,5,medLow+2]},
+  ];
+  return `<div class="risk-coin-grid">${defs.map((d,i)=>{
+    const up=d.trend.diff>=0;
+    return `<div class="risk-coin">
+      <div>
+        <div class="risk-coin-head"><span class="risk-coin-icon" style="color:${d.color}"><i class="ph ${d.icon}"></i></span>${d.name}</div>
+        <div class="risk-coin-value">${d.value} items</div>
+        <div class="risk-coin-trend ${up?'up':'down'}">${up?'+':'-'} ${Math.abs(d.trend.pct)}% <i class="ph ${up?'ph-arrow-up':'ph-arrow-down'}"></i></div>
+      </div>
+      ${_sparkSvg(d.series,d.line)}
+    </div>`;
+  }).join('')}</div>`;
+}
+function _findingCoinCards(){
+  const open=D.findings.filter(f=>f.status==='Open').length;
+  const inProgress=D.findings.filter(f=>f.status==='In Progress').length;
+  const resolved=D.findings.filter(f=>f.status==='Resolved').length;
+  const defs=[
+    {name:'Open Findings',icon:'ph-magnifying-glass',value:open,color:'#f46a6a',line:'#f46a6a',trend:_trend(open,1),series:[1,3,2,4,open+2,open+1,open+4,open+3,open+5,open+2]},
+    {name:'In Progress',icon:'ph-timer',value:inProgress,color:'#f1b44c',line:'#f1b44c',trend:_trend(inProgress,2),series:[1,1,2,3,inProgress+2,2,inProgress+3,3,inProgress+1,inProgress+2]},
+    {name:'Resolved',icon:'ph-check-circle',value:resolved,color:'#34c38f',line:'#34c38f',trend:_trend(resolved,3),series:[1,2,3,resolved+1,4,resolved+2,5,resolved+3,6,resolved+4]},
+  ];
+  return `<div class="risk-coin-grid">${defs.map(d=>{
+    const up=d.trend.diff>=0;
+    return `<div class="risk-coin">
+      <div>
+        <div class="risk-coin-head"><span class="risk-coin-icon" style="color:${d.color}"><i class="ph ${d.icon}"></i></span>${d.name}</div>
+        <div class="risk-coin-value">${d.value} items</div>
+        <div class="risk-coin-trend ${up?'up':'down'}">${up?'+':'-'} ${Math.abs(d.trend.pct)}% <i class="ph ${up?'ph-arrow-up':'ph-arrow-down'}"></i></div>
+      </div>
+      ${_sparkSvg(d.series,d.line)}
+    </div>`;
+  }).join('')}</div>`;
+}
+function _metricCard({label,value,sub,icon,color,trend,series}){
+  return `<div class="metric-card">
+    <div class="metric-top">
+      <div><div class="metric-label">${label}</div><div class="metric-value">${value}</div></div>
+      <div class="metric-icon" style="background:${color}"><i class="ph ${icon}"></i></div>
+    </div>
+    ${trend?_trendPill(trend):''}
+    <div class="metric-sub">${sub||''}</div>
+    ${series?_spark(series,color):''}
+  </div>`;
+}
+function _coinStats(){
+  const riskTrend=_trend(D.risks.length,1);
+  const findingTrend=_trend(D.findings.length,2);
+  const evidenceTrend=_trend(D.evidence.length,3);
+  return `<div class="skote-grid" style="margin-bottom:18px;">
+    <div class="skote-span-4">${_metricCard({label:'Risks',value:D.risks.length,sub:'Portfolio growth vs previous snapshot',icon:'ph-warning',color:'linear-gradient(135deg,#ef4444,#f97316)',trend:riskTrend,series:[1,2,D.risks.length,Math.max(1,D.risks.length+1),D.risks.length+2]})}</div>
+    <div class="skote-span-4">${_metricCard({label:'Findings',value:D.findings.length,sub:'Detected findings trend',icon:'ph-magnifying-glass',color:'linear-gradient(135deg,#6366f1,#22d3ee)',trend:findingTrend,series:[1,D.findings.length,2,D.findings.length+1,Math.max(1,D.findings.length)]})}</div>
+    <div class="skote-span-4">${_metricCard({label:'Evidence',value:D.evidence.length,sub:'Collected evidence volume',icon:'ph-clipboard-text',color:'linear-gradient(135deg,#34d399,#22d3ee)',trend:evidenceTrend,series:[1,2,3,D.evidence.length,Math.max(2,D.evidence.length+1)]})}</div>
+  </div>`;
+}
+function _donutStyle(counts,colors){
+  const total=Math.max(Object.values(counts).reduce((a,b)=>a+b,0),1);
+  let start=0;
+  const parts=Object.values(counts).map((v,i)=>{
+    const deg=v/total*360;
+    const seg=`${colors[i]} ${start}deg ${start+deg}deg`;
+    start+=deg;
+    return seg;
+  });
+  return `conic-gradient(${parts.join(',')})`;
+}
+function renderProgramHealthSnapshot(targetId,score){
+  const el=document.getElementById(targetId);
+  if(!el)return;
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const risks=D.risks.length, findings=D.findings.length, evidence=D.evidence.length;
+  const riskPattern=[44,55,41,67,22,43,36,52,24,18,36,48];
+  const findingPattern=[13,23,20,8,13,27,18,22,10,16,24,22];
+  const evidencePattern=[11,17,15,15,21,14,11,18,17,12,20,18];
+  const scale=(base,total,boost)=>Math.max(4,Math.round(base*(0.55+Math.min(total,12)/24)+boost));
+  const rows=months.map((m,i)=>({
+    m,
+    a:scale(riskPattern[i],risks,i%3),
+    b:scale(findingPattern[i],findings,(i+1)%3),
+    c:scale(evidencePattern[i],evidence,(i+2)%3)
+  }));
+  const max=Math.max(...rows.map(r=>r.a+r.b+r.c),100);
+  el.innerHTML=`<div class="email-chart">
+    <div class="email-chart-head">
+      <div class="email-title">Program Health Snapshot</div>
+      <div class="email-tabs"><span>Week</span><span>Month</span><span class="active">Year</span></div>
+    </div>
+    <div class="email-plot">
+      <div class="email-y"><span>100</span><span>80</span><span>60</span><span>40</span><span>20</span><span>0</span></div>
+      <div class="email-area">
+        <div class="email-bars">
+          ${rows.map(r=>{
+            const h=Math.round((r.a+r.b+r.c)/max*246);
+            return `<div class="email-month"><div class="email-stack" style="height:${Math.max(18,h)}px">
+              <div class="email-seg-a" style="height:${Math.round(r.a/(r.a+r.b+r.c)*100)}%"></div>
+              <div class="email-seg-b" style="height:${Math.round(r.b/(r.a+r.b+r.c)*100)}%"></div>
+              <div class="email-seg-c" style="height:${Math.round(r.c/(r.a+r.b+r.c)*100)}%"></div>
+            </div></div>`;
+          }).join('')}
+        </div>
+      </div>
+      <div class="email-x">${months.map(m=>`<span>${m}</span>`).join('')}</div>
+    </div>
+    <div class="email-legend">
+      <span><i class="email-swatch" style="background:#5669e6"></i>Risks</span>
+      <span><i class="email-swatch" style="background:#f3b547"></i>Findings</span>
+      <span><i class="email-swatch" style="background:#34c38f"></i>Evidence</span>
+    </div>
+  </div>`;
+}
+function renderRiskSeverityChart(targetId){
+  const el=document.getElementById(targetId); if(!el)return;
+  const counts=_countBy(D.risks,'severity',['Critical','High','Medium','Low']);
+  const total=D.risks.length;
+  const last=Math.max(0,total-Math.max(1,counts.Critical+counts.High));
+  const t=_trend(total,1);
+  const data=[30,40,36,51,49,72,69,56,68,82,68,76].map((v,i)=>Math.max(30,Math.min(90,v+Math.min(total,12)-(i%3)*2)));
+  const points=data.map((v,i)=>`${44+(i*(1000/11))},${230-((v-30)/60*220)}`).join(' ');
+  el.innerHTML=`<div class="earning-card">
+    <div class="earning-head">
+      <div class="earning-title">Risk Earning</div>
+      <div class="earning-tabs"><span>Jan <i class="ph ph-caret-down"></i></span><span class="active">Month</span></div>
+    </div>
+    <div class="earning-body">
+      <div class="earning-copy">
+        <div class="earning-muted">This month</div>
+        <div class="earning-value">${total} active risks</div>
+        <div><span class="earning-badge"><i class="ph ph-trend-up"></i> ${t.pct}%</span><span style="font-size:13px;color:#c9d4ff">From previous period</span></div>
+        <button class="earning-btn" onclick="nav('risk-workspace')">View Details <i class="ph ph-caret-right"></i></button>
+        <div class="earning-last">Last month<strong>${last} risks</strong></div>
+      </div>
+      <div class="line-chart">
+        <div class="line-y"><span>90</span><span>80</span><span>70</span><span>60</span><span>50</span><span>40</span><span>30</span></div>
+        <svg class="line-svg" viewBox="0 0 1044 250" preserveAspectRatio="none">
+          <polyline points="${points}" fill="none" stroke="#556ee6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="line-x">${Array.from({length:12},(_,i)=>`<span>${i+1}</span>`).join('')}</div>
+      </div>
+    </div>
+  </div>`;
+}
+function renderRiskSnapshotChart(targetId){
+  const el=document.getElementById(targetId); if(!el)return;
+  const counts=_countBy(D.risks,'severity',['Critical','High','Medium','Low']);
+  const productA=counts.Critical+counts.High;
+  const productB=counts.Medium;
+  const productC=counts.Low;
+  const total=Math.max(productA+productB+productC,1);
+  const degA=productA/total*360;
+  const degB=productB/total*360;
+  el.innerHTML=`<div class="risk-analytics-card">
+    <div class="earning-title">Risk Analytics</div>
+    <div class="sales-donut-wrap">
+      <div class="sales-donut" style="background:conic-gradient(#556ee6 0 ${degA}deg,#34c38f ${degA}deg ${degA+degB}deg,#f46a6a ${degA+degB}deg 360deg)"></div>
+    </div>
+    <div class="sales-legend">
+      <div class="sales-item"><span class="sales-dot" style="background:#556ee6"></span><div>Critical + High<strong>${productA}</strong></div></div>
+      <div class="sales-item"><span class="sales-dot" style="background:#34c38f"></span><div>Medium<strong>${productB}</strong></div></div>
+      <div class="sales-item"><span class="sales-dot" style="background:#f46a6a"></span><div>Low<strong>${productC}</strong></div></div>
+    </div>
+  </div>`;
+}
+function renderFindingStatusChart(targetId){
+  const el=document.getElementById(targetId); if(!el)return;
+  const counts=_countBy(D.findings,'status',['Open','In Progress','Resolved']);
+  const total=Math.max(D.findings.length,1);
+  const degA=counts.Open/total*360;
+  const degB=counts['In Progress']/total*360;
+  el.innerHTML=`<div class="risk-analytics-card">
+    <div class="earning-title">Findings Overview</div>
+    <div class="sales-donut-wrap">
+      <div class="sales-donut" style="background:conic-gradient(#f46a6a 0 ${degA}deg,#f1b44c ${degA}deg ${degA+degB}deg,#34c38f ${degA+degB}deg 360deg)">
+        <div style="position:relative;z-index:1;text-align:center;color:#fff;">
+          <div style="font-size:28px;font-weight:700;line-height:1">${D.findings.length}</div>
+          <div style="font-size:11px;color:#c9d4ff;margin-top:5px;text-transform:uppercase;letter-spacing:.08em">Findings</div>
+        </div>
+      </div>
+    </div>
+    <div class="sales-legend">
+      <div class="sales-item"><span class="sales-dot" style="background:#f46a6a"></span><div>Open<strong>${counts.Open}</strong></div></div>
+      <div class="sales-item"><span class="sales-dot" style="background:#f1b44c"></span><div>In Progress<strong>${counts['In Progress']}</strong></div></div>
+      <div class="sales-item"><span class="sales-dot" style="background:#34c38f"></span><div>Resolved<strong>${counts.Resolved}</strong></div></div>
+    </div>
+  </div>`;
+}
+function renderFindingSeverityChart(targetId){
+  const el=document.getElementById(targetId); if(!el)return;
+  const counts=_countBy(D.findings,'severity',['Critical','High','Medium','Low']);
+  const total=Math.max(D.findings.length,1);
+  const data=[28,34,39,45,42,58,54,63,71,66,74,82].map((v,i)=>Math.max(26,Math.min(90,v+Math.min(D.findings.length,14)-(i%4)*2)));
+  const points=data.map((v,i)=>`${44+(i*(1000/11))},${230-((v-25)/65*220)}`).join(' ');
+  el.innerHTML=`<div class="earning-card">
+    <div class="earning-head">
+      <div class="earning-title">Findings Discovery</div>
+      <div class="earning-tabs"><span>Jan <i class="ph ph-caret-down"></i></span><span class="active">Month</span></div>
+    </div>
+    <div class="earning-body">
+      <div class="earning-copy">
+        <div class="earning-muted">This month</div>
+        <div class="earning-value">${D.findings.length} findings</div>
+        <div><span class="earning-badge"><i class="ph ph-trend-up"></i> ${_trend(D.findings.length,2).pct}%</span><span style="font-size:13px;color:#c9d4ff">Detection trend</span></div>
+        <button class="earning-btn" onclick="nav('findings')">View Details <i class="ph ph-caret-right"></i></button>
+        <div class="earning-last">High impact<strong>${counts.Critical+counts.High} findings</strong></div>
+      </div>
+      <div class="line-chart">
+        <div class="line-y"><span>90</span><span>80</span><span>70</span><span>60</span><span>50</span><span>40</span><span>30</span></div>
+        <svg class="line-svg" viewBox="0 0 1044 250" preserveAspectRatio="none">
+          <polyline points="${points}" fill="none" stroke="#34c38f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="line-x">${Array.from({length:12},(_,i)=>`<span>${i+1}</span>`).join('')}</div>
+      </div>
+    </div>
+  </div>`;
+}
+function renderFindingStatusSnapshot(targetId){
+  const el=document.getElementById(targetId); if(!el)return;
+  const total=D.findings.length;
+  const values=[32,34,33,35,34,33,32,31,30,32,31,33,34,32,31,33,32,34,35,33,32,34,36,38,37,38,38,39,38,39].map((v,i)=>{
+    const boost=Math.min(total,12)*0.16;
+    const pulse=((i*5)%9)-4;
+    return Math.max(28,Math.min(40,v+boost+pulse*.12));
+  });
+  const toPoints=arr=>arr.map((v,i)=>`${Math.round(i*(720/(arr.length-1)))},${Math.round(236-((v-28)/12*220))}`).join(' ');
+  const points=toPoints(values);
+  const areaPath=`M ${points} L 720 236 L 0 236 Z`;
+  el.innerHTML=`<div class="finding-overview">
+    <div class="finding-overview-head">
+      <div class="finding-overview-title">Overview</div>
+      <div class="finding-range"><span>1M</span><span>6M</span><span>1Y</span><span>ALL</span></div>
+    </div>
+    <div class="area-chart">
+      <div class="area-y"><span>40.00</span><span>38.00</span><span>36.00</span><span>34.00</span><span>32.00</span><span>30.00</span><span>28.00</span></div>
+      <svg class="area-svg" viewBox="0 0 720 252" preserveAspectRatio="none">
+        <path d="${areaPath}" fill="rgba(241,180,76,.28)"></path>
+        <polyline points="${points}" fill="none" stroke="#f1b44c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline>
+      </svg>
+      <div class="area-x"><span>Mar '12</span><span>May '12</span><span>Jul '12</span><span>Sep '12</span><span>Nov '12</span><span>2013</span><span>Jan '13</span><span>Feb '13</span></div>
+    </div>
+  </div>`;
+}
+function renderFindingSeveritySnapshot(targetId){
+  const el=document.getElementById(targetId); if(!el)return;
+  const counts=_countBy(D.findings,'severity',['Critical','High','Medium','Low']);
+  el.innerHTML=`<div class="skote-grid">${Object.entries(counts).map(([k,v],i)=>`<div class="skote-span-3" style="grid-column:span 3">${_metricCard({label:k,value:v,sub:'finding severity growth',icon:['ph-fire','ph-warning','ph-gauge','ph-check-circle'][i],color:['linear-gradient(135deg,#ef4444,#f97316)','linear-gradient(135deg,#f59e0b,#f97316)','linear-gradient(135deg,#34d399,#22d3ee)','linear-gradient(135deg,#6366f1,#22d3ee)'][i],trend:_trend(v,i+2),series:[1,v+1,Math.max(1,v),v+2]})}</div>`).join('')}</div>`;
+}
+function renderReports(){
+  const impl=D.controls.filter(c=>c.status==='Implemented').length;
+  const tot=Math.max(D.controls.length,1);
+  const score=Math.round(impl/tot*100);
+  const connectedPlugins=PLUGIN_DEFS.filter(p=>!!((D.plugins[p.name]||{}).connected)).length;
+  const totalPlugins=PLUGIN_DEFS.length;
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  set('r-score',score+'%'); set('r-open',D.risks.length); set('r-resolved',D.findings.length);
+  set('r-fw',Object.keys(D.frameworks).length); set('r-int',connectedPlugins); set('r-ev',D.evidence.length);
+  set('r-vendors',D.vendors.length); set('r-audits',D.audits.length); set('r-policies',D.policies.length);
+  const sub=document.getElementById('r-int-sub');
+  if(sub)sub.textContent=`${connectedPlugins}/${totalPlugins} plugins connected`;
+  renderProgramHealthSnapshot('r-overall-health',score);
+}
+function renderReportRisks(){
+  renderRiskSeverityChart('rr-risk-chart');
+  renderRiskSnapshotChart('rr-risk-snapshot');
+  const chart=document.getElementById('rr-risk-chart');
+  if(chart)chart.insertAdjacentHTML('afterbegin',_riskCoinCards());
+  const tb=document.getElementById('rr-risks-tb');
+  tb.innerHTML=D.risks.length?D.risks.map(r=>`<tr><td style="font-weight:500">${r.name}</td><td>${r.category||'—'}</td><td>${badge(r.severity)}</td><td>${badge(r.status)}</td><td>${r.owner||'—'}</td></tr>`).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:32px">No risks registered.</td></tr>';
+}
+function renderReportFindings(){
+  renderFindingStatusChart('rf-find-chart');
+  renderFindingSeverityChart('rf-sev-chart');
+  const chart=document.getElementById('rf-find-chart');
+  if(chart)chart.insertAdjacentHTML('afterbegin',_findingCoinCards());
+  renderFindingStatusSnapshot('rf-status-snapshot');
+  const tb=document.getElementById('rf-findings-tb');
+  tb.innerHTML=D.findings.length?D.findings.map(f=>`<tr><td style="font-weight:500">${f.name||f.title}</td><td>${badge(f.severity)}</td><td>${f.source||'—'}</td><td>${badge(f.status)}</td><td style="color:var(--text3)">${f.created||'—'}</td></tr>`).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:32px">No findings registered.</td></tr>';
 }
 function exportReport(){
   const html=`<html><head><meta charset="UTF-8"></head><body>
@@ -5408,19 +6171,24 @@ function applyTheme(light){
   document.body.classList.toggle('light-mode', light);
   const lbl=document.getElementById('theme-label');
   const knob=document.getElementById('theme-knob');
-  if(lbl)lbl.textContent=light?'☀️ Light':'🌙 Dark';
+  if(lbl)lbl.innerHTML=light?'<i class="ph ph-sun"></i> Light':'<i class="ph ph-moon"></i> Dark';
   if(knob)knob.style.transform=light?'translateX(22px)':'translateX(0)';
   const btn=document.getElementById('theme-toggle-btn');
-  if(btn)btn.textContent=light?'🌙 Dark':'☀️ Light';
+  if(btn){
+    const label=light?'Dark Mode':'Light Mode';
+    btn.innerHTML=(light?'<i class="ph ph-moon"></i> ':'<i class="ph ph-sun"></i> ')+(currentLang==='ka'?i18nTranslateText(label,'ka'):label);
+  }
 }
 function toggleTheme(){
   const isLight=!document.body.classList.contains('light-mode');
   applyTheme(isLight);
   localStorage.setItem('aegis_theme', isLight?'light':'dark');
+  requestAnimationFrame(()=>applyLanguage(currentLang));
 }
 // restore on load — default to dark
 (function(){
   applyTheme(localStorage.getItem('aegis_theme')==='light');
+  requestAnimationFrame(()=>applyLanguage(currentLang));
 })();
 
 function settingsTab(el,id){
@@ -5647,7 +6415,7 @@ function enterAuditorMode(){
   document.getElementById('auditor-banner').style.display='flex';
   logAction('Entered Auditor Mode simulation','view','👁️');
   notify('Auditor Mode active — viewing as Auditor','info');
-  nav('dashboard');
+  nav('home');
 }
 function exitAuditorMode(){
   document.body.classList.remove('auditor-mode');
@@ -5656,7 +6424,7 @@ function exitAuditorMode(){
   notify('Returned to Admin view','info');
 }
 const V=id=>{const el=document.getElementById(id);return el?el.value:'';}
-const today=()=>new Date().toISOString().split('T')[0];
+const today=()=>localDateISO(new Date());
 function del(col,id,fn){
   if(!confirm('Delete this item?'))return;
   const ep=_EP[col];
@@ -5669,12 +6437,257 @@ function del(col,id,fn){
   }
 }
 
+// ═══════════════════════════════════════════
+// TASKS & CALENDAR
+// ═══════════════════════════════════════════
+let calendarCursor=new Date();
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function localDateISO(date=new Date()){
+  const d=new Date(date);
+  d.setMinutes(d.getMinutes()-d.getTimezoneOffset());
+  return d.toISOString().slice(0,10);
+}
+function taskSeed(){
+  const d=new Date();
+  const iso=(add)=>{const x=new Date(d);x.setDate(x.getDate()+add);return localDateISO(x);};
+  return {
+    tasks:[
+      {id:uid(),name:'ISO 27001 audit evidence prep',desc:'Collect access control and MFA evidence for the upcoming audit.',status:'Upcoming',start:iso(1),due:iso(7),members:'Nino, Giorgi, Ana',budget:'32h'},
+      {id:uid(),name:'Vendor risk review',desc:'Review high risk vendors and update risk treatment notes.',status:'Upcoming',start:iso(2),due:iso(10),members:'Mariam, Dato',budget:'18h'},
+      {id:uid(),name:'Quarterly policy update',desc:'Refresh security policy owners and review dates.',status:'In Progress',start:iso(-2),due:iso(5),members:'Ana, Levan',budget:'24h'},
+      {id:uid(),name:'Control mapping cleanup',desc:'Map findings to NIST controls and evidence items.',status:'In Progress',start:iso(-4),due:iso(4),members:'Giorgi, Nino, Irakli',budget:'20h'},
+      {id:uid(),name:'Risk dashboard redesign',desc:'Update reporting widgets and risk severity analytics.',status:'Completed',start:iso(-12),due:iso(-1),members:'Archili, Ana',budget:'Completed'}
+    ],
+    calendarEvents:[
+      {id:uid(),title:'Upcoming ISO audit',type:'audit',date:iso(3),time:'10:00',people:'audit-team@company.ge',notes:'Evidence readiness and scope review.'},
+      {id:uid(),title:'Weekly GRC sync',type:'sync',date:iso(5),time:'11:30',people:'security@company.ge',notes:'Risks, findings, and evidence status.'},
+      {id:uid(),title:'Team meeting',type:'meeting',date:iso(8),time:'15:00',people:'team@company.ge',notes:'Sprint planning and task ownership.'}
+    ]
+  };
+}
+function workUsesApi(){return !!api.token() && !AUTH_BYPASS;}
+function eventDateTime(date,time){
+  return `${date||today()}T${time||'09:00'}:00`;
+}
+function taskPayloadFromForm(){
+  return {
+    title:V('task-name').trim(),
+    description:V('task-desc')||null,
+    status:toApiEnum(V('task-status')||'upcoming'),
+    start_date:V('task-start')?eventDateTime(V('task-start'),'00:00'):null,
+    due_date:V('task-due')?eventDateTime(V('task-due'),'00:00'):null,
+    members:V('task-members')||null,
+    budget:V('task-budget')||null
+  };
+}
+function calendarPayloadFromModal(){
+  return {
+    title:V('event-title').trim(),
+    event_type:V('event-type')||'other',
+    event_date:eventDateTime(V('event-date'),V('event-time')),
+    people:V('event-people')||null,
+    notes:V('event-notes')||null
+  };
+}
+function loadWorkModule(){
+  if(workUsesApi())return;
+  if(D.tasks.length||D.calendarEvents.length)return;
+  try{
+    const saved=JSON.parse(localStorage.getItem('aegis_work_module')||'null');
+    if(saved&&Array.isArray(saved.tasks)&&Array.isArray(saved.calendarEvents)){
+      D.tasks=saved.tasks;D.calendarEvents=saved.calendarEvents;return;
+    }
+  }catch(e){}
+  const seeded=taskSeed();
+  D.tasks=seeded.tasks;D.calendarEvents=seeded.calendarEvents;persistWorkModule();
+}
+function persistWorkModule(){
+  if(workUsesApi())return;
+  localStorage.setItem('aegis_work_module',JSON.stringify({tasks:D.tasks,calendarEvents:D.calendarEvents}));
+}
+function memberAvatars(names,limit=4){
+  const list=String(names||'Team').split(',').map(x=>x.trim()).filter(Boolean);
+  return `<div class="task-avatars">${list.slice(0,limit).map((n,i)=>`<span class="task-avatar" style="background:${['#38bdf8','#34c38f','#f97316','#ef4444'][i%4]}">${esc(n[0]||'T')}</span>`).join('')}${list.length>limit?`<span class="task-avatar" style="background:#6366f1">+${list.length-limit}</span>`:''}</div>`;
+}
+function taskBadge(status){
+  const cls={Upcoming:'b-blue','In Progress':'b-amber',Completed:'b-green'}[status]||'b-gray';
+  return `<span class="badge ${cls}">${esc(status)}</span>`;
+}
+function taskRow(t){
+  return `<div class="task-row">
+    <input class="task-check" type="checkbox" ${t.status==='Completed'?'checked':''} onchange="toggleTaskDone('${t.id}')">
+    <div><div class="task-name">${esc(t.name)}</div><div class="task-meta">${esc(t.due||'No due date')} · ${esc(t.budget||'No budget')}</div></div>
+    ${memberAvatars(t.members)}
+    <div>${taskBadge(t.status)}</div>
+    <button class="btn btn-danger btn-sm" onclick="deleteTask('${t.id}')"><i class="ph ph-x"></i></button>
+  </div>`;
+}
+function renderTaskList(){
+  loadWorkModule();
+  const by=s=>D.tasks.filter(t=>t.status===s);
+  const fill=(id,list,empty)=>{const el=document.getElementById(id);if(el)el.innerHTML=list.length?list.map(taskRow).join(''):`<div style="color:var(--text3);font-size:13px;padding:18px 8px">${empty}</div>`;};
+  fill('task-list-upcoming',by('Upcoming'),'No upcoming tasks.');
+  fill('task-list-progress',by('In Progress'),'No tasks in progress.');
+  fill('task-list-completed',by('Completed'),'No completed tasks yet.');
+  renderTaskChart();
+  const recent=document.getElementById('task-recent');
+  if(recent)recent.innerHTML=D.tasks.slice(0,5).map(t=>`<div class="task-recent-row"><div><div class="task-name">${esc(t.name)}</div><div class="task-meta">${esc(t.due||'No due date')}</div></div>${memberAvatars(t.members,3)}</div>`).join('');
+}
+function renderTaskChart(){
+  const el=document.getElementById('task-chart');if(!el)return;
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov'];
+  const bars=[22,12,21,26,14,22,52,20,44,22,30].map(v=>Math.min(80,v+D.tasks.filter(t=>t.status==='Completed').length*2));
+  const line=[24,12,34,28,18,22,62,32,44,24,40].map((v,i)=>`${38+i*54},${190-v*2}`).join(' ');
+  el.innerHTML=`<div class="task-chart"><svg viewBox="0 0 640 220" preserveAspectRatio="none">
+    ${[40,80,120,160,200].map(y=>`<line x1="30" y1="${y}" x2="620" y2="${y}" stroke="rgba(148,163,184,.14)" />`).join('')}
+    ${bars.map((v,i)=>`<rect x="${34+i*54}" y="${205-v*2}" width="12" height="${v*2}" fill="#6376f1" rx="2" />`).join('')}
+    <polyline points="${line}" fill="none" stroke="#34c38f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    ${months.map((m,i)=>`<text x="${40+i*54}" y="218" fill="var(--text3)" font-size="12" text-anchor="middle">${m}</text>`).join('')}
+  </svg><div style="display:flex;justify-content:center;gap:18px;margin-top:4px;font-size:12px;color:var(--text3)"><span style="color:#6376f1">■ Complete Tasks</span><span style="color:#34c38f">● All Tasks</span></div></div>`;
+}
+function renderTaskKanban(){
+  loadWorkModule();
+  const board=document.getElementById('kanban-board');if(!board)return;
+  const cols=['Upcoming','In Progress','Completed'];
+  board.innerHTML=cols.map(c=>`<div class="kanban-col"><div class="kanban-head"><div class="kanban-title">${c}</div><i class="ph ph-dots-three-vertical"></i></div>
+    ${D.tasks.filter(t=>t.status===c).map(t=>`<div class="kanban-card"><div style="display:flex;justify-content:space-between;gap:12px"><div class="kanban-card-title">${esc(t.name)}</div>${taskBadge(t.status)}</div><div class="kanban-card-date">${esc(t.due||'No due date')}</div><div style="font-size:12px;color:var(--text3);line-height:1.5;margin-bottom:16px">${esc(t.desc||'')}</div><div class="kanban-card-foot">${memberAvatars(t.members)}<div style="text-align:right;font-size:12px;color:var(--text3)"><strong style="color:var(--text)">${esc(t.budget||'--')}</strong><br>Budget</div></div></div>`).join('')||`<div style="color:var(--text3);font-size:13px;padding:18px 4px">No tasks.</div>`}
+    <button class="btn btn-primary btn-sm" style="width:100%;justify-content:center" onclick="nav('tasks-create')"><i class="ph ph-plus"></i> Add New</button></div>`).join('');
+}
+function renderCreateTask(){
+  ['task-name','task-desc','task-members','task-budget'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  const todayStr=today();
+  const start=document.getElementById('task-start');if(start)start.value=todayStr;
+  const due=document.getElementById('task-due');if(due)due.value=todayStr;
+  const status=document.getElementById('task-status');if(status)status.value='Upcoming';
+}
+function addTask(){
+  const name=V('task-name').trim();
+  if(!name){notify('Task name required','error');return;}
+  if(workUsesApi()){
+    api.post('/tasks',taskPayloadFromForm()).then(t=>{
+      D.tasks.unshift(adaptTask(t));
+      notify('Task created');nav('tasks-list');
+    }).catch(e=>notify('Error: '+e.message,'error'));
+    return;
+  }
+  loadWorkModule();
+  D.tasks.unshift({id:uid(),name,desc:V('task-desc'),status:V('task-status')||'Upcoming',start:V('task-start'),due:V('task-due'),members:V('task-members'),budget:V('task-budget')});
+  persistWorkModule();notify('Task created');nav('tasks-list');
+}
+function toggleTaskDone(id){
+  const t=D.tasks.find(x=>x.id===id);if(!t)return;
+  const next=t.status==='Completed'?'In Progress':'Completed';
+  if(workUsesApi()){
+    api.patch('/tasks/'+id,{status:toApiEnum(next)}).then(r=>{
+      const i=D.tasks.findIndex(x=>x.id===id);if(i>=0)D.tasks[i]=adaptTask(r);
+      renderTaskList();
+    }).catch(e=>notify('Error: '+e.message,'error'));
+    return;
+  }
+  t.status=next;persistWorkModule();renderTaskList();
+}
+function deleteTask(id){
+  if(!confirm('Delete this task?'))return;
+  if(workUsesApi()){
+    api.del('/tasks/'+id).then(()=>{
+      D.tasks=D.tasks.filter(t=>t.id!==id);
+      renderPage(document.querySelector('.page.active')?.id.replace('page-','')||'tasks-list');
+      notify('Task deleted','info');
+    }).catch(e=>notify('Delete failed: '+e.message,'error'));
+    return;
+  }
+  D.tasks=D.tasks.filter(t=>t.id!==id);persistWorkModule();renderPage(document.querySelector('.page.active')?.id.replace('page-','')||'tasks-list');notify('Task deleted','info');
+}
+function moveCalendar(delta){calendarCursor.setMonth(calendarCursor.getMonth()+delta);renderCalendar();}
+function renderCalendar(){
+  loadWorkModule();
+  const grid=document.getElementById('calendar-grid');if(!grid)return;
+  const y=calendarCursor.getFullYear(),m=calendarCursor.getMonth();
+  document.getElementById('calendar-month').textContent=calendarCursor.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+  const first=new Date(y,m,1),start=new Date(first);start.setDate(1-first.getDay());
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div class="calendar-weekday">${d}</div>`);
+  const todayStr=today();
+  for(let i=0;i<42;i++){
+    const d=new Date(start);d.setDate(start.getDate()+i);
+  const iso=localDateISO(d);
+    const events=D.calendarEvents.filter(e=>e.date===iso);
+    days.push(`<div class="calendar-day ${d.getMonth()!==m?'muted':''} ${iso===todayStr?'today':''}" onclick="openEventModal('${iso}')"><div class="calendar-date">${d.getDate()}</div>${events.slice(0,3).map(e=>`<span class="calendar-chip ${e.type}" onclick="event.stopPropagation();openEventModal('${iso}','${e.id}')">${esc(e.title)}</span>`).join('')}</div>`);
+  }
+  grid.innerHTML=days.join('');
+  const list=document.getElementById('event-list');
+  const upcoming=D.calendarEvents.slice().sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).filter(e=>e.date>=todayStr).slice(0,8);
+  list.innerHTML=upcoming.length?upcoming.map(e=>`<div class="event-item"><span class="event-dot" style="background:${{audit:'#ef4444',meeting:'#6366f1',sync:'#10b981',deadline:'#f59e0b',other:'#64748b'}[e.type]||'#64748b'}"></span><div style="flex:1;min-width:0"><div class="event-title">${esc(e.title)}</div><div class="event-meta">${esc(e.date)} ${esc(e.time||'')}<br>${esc(e.people||'No invitees')}</div></div><button class="btn btn-ghost btn-sm" onclick="openEventModal('${e.date}','${e.id}')"><i class="ph ph-pencil"></i></button></div>`).join(''):'<div style="color:var(--text3);font-size:13px">No upcoming events.</div>';
+}
+function openEventModal(date='',id=''){
+  loadWorkModule();
+  const e=D.calendarEvents.find(x=>x.id===id);
+  document.getElementById('event-id').value=e?.id||'';
+  document.getElementById('event-title').value=e?.title||'';
+  document.getElementById('event-type').value=e?.type||'audit';
+  document.getElementById('event-date').value=e?.date||date||today();
+  document.getElementById('event-time').value=e?.time||'09:00';
+  document.getElementById('event-people').value=e?.people||'';
+  document.getElementById('event-notes').value=e?.notes||'';
+  document.getElementById('event-delete-btn').style.display=e?'':'none';
+  openModal('modal-calendar-event');
+}
+function saveCalendarEvent(){
+  const title=V('event-title').trim();
+  if(!title){notify('Event title required','error');return;}
+  const id=V('event-id');
+  if(workUsesApi()){
+    const payload=calendarPayloadFromModal();
+    const req=id?api.patch('/calendar-events/'+id,payload):api.post('/calendar-events',payload);
+    req.then(ev=>{
+      const adapted=adaptCalendarEvent(ev);
+      const i=D.calendarEvents.findIndex(e=>e.id===adapted.id);
+      if(i>=0)D.calendarEvents[i]=adapted;else D.calendarEvents.push(adapted);
+      closeModal('modal-calendar-event');renderCalendar();notify('Event saved');
+    }).catch(e=>notify('Error: '+e.message,'error'));
+    return;
+  }
+  const payload={id:id||uid(),title,type:V('event-type')||'other',date:V('event-date')||today(),time:V('event-time'),people:V('event-people'),notes:V('event-notes')};
+  const i=D.calendarEvents.findIndex(e=>e.id===id);
+  if(i>=0)D.calendarEvents[i]=payload;else D.calendarEvents.push(payload);
+  persistWorkModule();closeModal('modal-calendar-event');renderCalendar();notify('Event saved');
+}
+function deleteCalendarEvent(){
+  const id=V('event-id');if(!id||!confirm('Delete this event?'))return;
+  if(workUsesApi()){
+    api.del('/calendar-events/'+id).then(()=>{
+      D.calendarEvents=D.calendarEvents.filter(e=>e.id!==id);
+      closeModal('modal-calendar-event');renderCalendar();notify('Event deleted','info');
+    }).catch(e=>notify('Delete failed: '+e.message,'error'));
+    return;
+  }
+  D.calendarEvents=D.calendarEvents.filter(e=>e.id!==id);persistWorkModule();closeModal('modal-calendar-event');renderCalendar();notify('Event deleted','info');
+}
+loadWorkModule();
+
+// V1 galaxy background
+(function(){
+  const starsEl=document.getElementById('stars-bg');
+  if(!starsEl || starsEl.dataset.ready)return;
+  starsEl.dataset.ready='1';
+  for(let i=0;i<100;i++){
+    const s=document.createElement('div');
+    s.className='star';
+    const size=Math.random()*2.2+0.4;
+    s.style.cssText=`width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--dur:${(Math.random()*4+2).toFixed(1)}s;--delay:${(Math.random()*4).toFixed(1)}s;opacity:0.12;`;
+    starsEl.appendChild(s);
+  }
+})();
+
 // INIT
 document.getElementById('expand-fab').style.display='none';
 (function(){const wd=document.getElementById('welcome-date');if(wd){const d=new Date();wd.textContent=d.toLocaleDateString('en-GB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});}})();
 
 // ─── AUTH-AWARE STARTUP ───
 (async function(){
+  if(AUTH_BYPASS){
+    enterLocalDemo();
+    return;
+  }
   const token=localStorage.getItem('aegis_token');
   if(!token){showLogin();return;}
   try{

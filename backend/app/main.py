@@ -6,6 +6,7 @@ import os
 from app.config import settings
 from app.database import engine, Base, SessionLocal
 from app.routers import auth, users, risks, controls, assets, findings, vendors, audits, policies, evidence, frameworks, reports
+from app.routers import tasks, calendar_events
 from app.routers import risk_matrix
 import app.models  # noqa: F401 - registers all models with SQLAlchemy
 
@@ -51,6 +52,8 @@ app.include_router(evidence.router,   prefix="/api/evidence",   tags=["Evidence"
 app.include_router(frameworks.router, prefix="/api/frameworks", tags=["Frameworks"])
 app.include_router(reports.router,    prefix="/api/reports",    tags=["Reports"])
 app.include_router(risk_matrix.router, prefix="/api/risk-matrix", tags=["Risk Matrix"])
+app.include_router(tasks.router, prefix="/api/tasks", tags=["Tasks"])
+app.include_router(calendar_events.router, prefix="/api/calendar-events", tags=["Calendar Events"])
 
 
 @app.get("/api/health")

@@ -1,1 +1,0 @@
-# Aegis_GRC_PLATFORM

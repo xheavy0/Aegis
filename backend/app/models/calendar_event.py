@@ -7,26 +7,24 @@ import enum
 from app.database import Base
 
 
-class PolicyStatus(str, enum.Enum):
-    DRAFT = "draft"
-    REVIEW = "review"
-    APPROVED = "approved"
-    ARCHIVED = "archived"
+class CalendarEventType(str, enum.Enum):
+    AUDIT = "audit"
+    MEETING = "meeting"
+    SYNC = "sync"
+    DEADLINE = "deadline"
+    OTHER = "other"
 
 
-class Policy(Base):
-    __tablename__ = "policies"
+class CalendarEvent(Base):
+    __tablename__ = "calendar_events"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     title = Column(String(500), nullable=False)
-    description = Column(Text, nullable=True)
-    content = Column(Text, nullable=True)
-    category = Column(String(100), nullable=True)
-    status = Column(Enum(PolicyStatus), default=PolicyStatus.DRAFT)
-    owner = Column(String(255), nullable=True)
-    version = Column(String(20), default="1.0")
-    review_date = Column(DateTime(timezone=True), nullable=True)
-    approved_by = Column(String(255), nullable=True)
+    event_type = Column(Enum(CalendarEventType), default=CalendarEventType.OTHER, nullable=False)
+    event_date = Column(DateTime(timezone=True), nullable=False)
+    people = Column(Text, nullable=True)
+    notes = Column(Text, nullable=True)
     created_by = Column(UUID(as_uuid=True), nullable=True)
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
+
