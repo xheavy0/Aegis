@@ -66,9 +66,10 @@ def delete_user(user_id: UUID, db: Session = Depends(get_db), current=Depends(re
         raise HTTPException(status_code=404, detail="User not found")
     if user.id == current.id:
         raise HTTPException(status_code=400, detail="Cannot delete yourself")
+    user_email = user.email
     db.delete(user)
     db.commit()
-    log_action(db, current.id, "DELETE", "user", user_id, f"Deleted user {user.email}")
+    log_action(db, current.id, "DELETE", "user", user_id, f"Deleted user {user_email}")
 
 
 @router.get("/audit-logs/all", response_model=List[AuditLogOut])

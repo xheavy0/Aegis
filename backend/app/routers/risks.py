@@ -65,6 +65,7 @@ def delete_risk(risk_id: UUID, db: Session = Depends(get_db), current=Depends(re
     risk = db.query(Risk).filter(Risk.id == risk_id).first()
     if not risk:
         raise HTTPException(status_code=404, detail="Risk not found")
+    risk_title = risk.title
     db.delete(risk)
     db.commit()
-    log_action(db, current.id, "DELETE", "risk", risk_id, f"Deleted risk: {risk.title}")
+    log_action(db, current.id, "DELETE", "risk", risk_id, f"Deleted risk: {risk_title}")

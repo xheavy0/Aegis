@@ -66,6 +66,15 @@ async def upload_evidence(
     if file.content_type not in ALLOWED_MIME_TYPES:
         raise HTTPException(status_code=400, detail=f"File type not allowed: {file.content_type}")
 
+    content = await file.read()
+    if len(content) > MAX_UPLOAD_SIZE:
+        raise HTTPException(status_code=413, detail=f"File too large. Maximum size is {MAX_UPLOAD_SIZE // (1024*1024)} MB.")
+
+    try:
+        parsed_control_id = UUID(control_id) if control_id else None
+    except (ValueError, AttributeError):
+        raise HTTPException(status_code=400, detail="Invalid control_id format.")
+
     file_id = str(uuid_lib.uuid4())
     ext = os.path.splitext(file.filename or "")[1].lower()
     # Prevent path traversal: use only the generated UUID + original extension
@@ -73,15 +82,7 @@ async def upload_evidence(
     file_path = os.path.join(UPLOAD_DIR, safe_filename)
 
     async with aiofiles.open(file_path, "wb") as f:
-        content = await file.read()
-        if len(content) > MAX_UPLOAD_SIZE:
-            raise HTTPException(status_code=413, detail=f"File too large. Maximum size is {MAX_UPLOAD_SIZE // (1024*1024)} MB.")
         await f.write(content)
-
-    try:
-        parsed_control_id = UUID(control_id) if control_id else None
-    except (ValueError, AttributeError):
-        raise HTTPException(status_code=400, detail="Invalid control_id format.")
 
     evidence = Evidence(
         title=title,
